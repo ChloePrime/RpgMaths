@@ -3,7 +3,7 @@ package moe.gensoukyo.rpgmaths.common;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatEntry;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -18,11 +18,11 @@ public class ModRegistries
 
     private static final ResourceLocation STATS_REG_NAME =
             new ResourceLocation(RpgMathsMod.ID, "stats");
-    private static final IForgeRegistry<IStatEntry> STAT_REGISTRY = new RegistryBuilder<IStatEntry>()
+    private static final IForgeRegistry<IStatType> STAT_REGISTRY = new RegistryBuilder<IStatType>()
             .setName(STATS_REG_NAME)
-            .setType(IStatEntry.class)
-            .create();;
-    public static IForgeRegistry<IStatEntry> getStatRegistry()
+            .setType(IStatType.class)
+            .create();
+    public static IForgeRegistry<IStatType> getStatRegistry()
     {
         return STAT_REGISTRY;
     }

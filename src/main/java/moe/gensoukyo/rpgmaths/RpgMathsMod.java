@@ -1,6 +1,7 @@
 package moe.gensoukyo.rpgmaths;
 
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
+import moe.gensoukyo.rpgmaths.common.ModStats;
 import moe.gensoukyo.rpgmaths.common.impl.RpgMathsApiImpl;
 import moe.gensoukyo.rpgmaths.common.items.ItemRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,7 @@ public class RpgMathsMod
     public RpgMathsMod()
     {
         ItemRegistry.init();
+        ModStats.init();
         //getApi().setDamageFormula((attacker, weapon, victim) -> 1.0);
     }
 }

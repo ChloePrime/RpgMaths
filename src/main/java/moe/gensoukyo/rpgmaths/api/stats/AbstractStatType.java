@@ -12,12 +12,12 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 方便继承
+ * 添加了针对FinalValue的默认处理
  * @author Chloe_koopa
  */
-public abstract class AbstractStatEntry
-        extends ForgeRegistryEntry<IStatEntry>
-        implements IStatEntry
+public abstract class AbstractStatType
+        extends ForgeRegistryEntry<IStatType>
+        implements IStatType
 {
     @CapabilityInject(IItemHandler.class)
     private static Capability<IItemHandler> ITEM_HANDLER;

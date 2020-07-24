@@ -3,10 +3,8 @@ package moe.gensoukyo.rpgmaths.common.capabilities;
 import moe.gensoukyo.rpgmaths.api.IRpgData;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
-import moe.gensoukyo.rpgmaths.common.capabilities.util.StorageToNbt;
+import moe.gensoukyo.rpgmaths.common.util.StorageCapToNbt;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -14,7 +12,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 /**
@@ -31,7 +28,7 @@ public class RpgDataCap
     {
         CapabilityManager.INSTANCE.register(
                 IRpgData.class,
-                StorageToNbt.getInstance(),
+                StorageCapToNbt.getInstance(),
                 () -> EMPTY
         );
     }

@@ -8,7 +8,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  * 一项属性
  * @author Chloe_koopa
  */
-public interface IStatEntry extends IForgeRegistryEntry<IStatEntry>
+public interface IStatType extends IForgeRegistryEntry<IStatType>
 {
     /**
      * 返回该实体的这项基础数值
@@ -18,8 +18,21 @@ public interface IStatEntry extends IForgeRegistryEntry<IStatEntry>
      */
     float getBaseValue(CapabilityProvider<?> entity,
                        CompoundNBT context);
+
+    /**
+     * 设置某个属性的基础值
+     * @apiNote 不保证对所有值有效
+     * @param entity 数据的拥有者
+     * @param context 该stat的一些上下文
+     * @param value 要将这个属性设置为的值（基础值）
+     */
+    void setBaseValue(CapabilityProvider<?> entity,
+                      CompoundNBT context,
+                      float value);
+
     /**
      * 返回该实体的这项最终数值
+     * @implSpec 如果entity为活体，那么需要包括装备和手上的道具的属性
      * @param entity 数据的拥有者
      * @param context 该stat的一些上下文
      * @return 包括装备加成的数据

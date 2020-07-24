@@ -4,10 +4,8 @@ import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.IDamageFormula;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatEntry;
-import moe.gensoukyo.rpgmaths.common.impl.RpgMathsApiImpl;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.extensions.IForgeResourcePack;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -43,21 +41,21 @@ public interface IRpgMathsApi {
      * 用于填入DeferredRegister的构造函数
      * @return RPG数值的注册表
      */
-    IForgeRegistry<IStatEntry> getStatRegEntry();
+    IForgeRegistry<IStatType> getStatRegistry();
 
     /**
      * 获取一项实体数值
      * @param id 需要查询的实体数值的id
      * @return id所表示的实体RPG数据类型，如果无该数值则返回Empty
      */
-    Optional<IStatEntry> getStat(ResourceLocation id);
+    Optional<IStatType> getStat(ResourceLocation id);
 
     /**
      * 获取伤害类型的注册表
      * 用于填入DeferredRegister的构造函数
      * @return 伤害类型的注册表
      */
-    IForgeRegistry<IDamageType> getDamageTypeRegEntry();
+    IForgeRegistry<IDamageType> getDamageTypeRegistry();
 
     /**
      * 获取id所表示的伤害类型
@@ -71,7 +69,7 @@ public interface IRpgMathsApi {
      * 用于填入DeferredRegister的构造函数
      * @return 抗性表模板的注册表
      */
-    IForgeRegistry<IResistanceMap> getResistanceMapRegEntry();
+    IForgeRegistry<IResistanceMap> getResistanceMapRegistry();
 
     /**
      * 获取id所表示的抗性表模板

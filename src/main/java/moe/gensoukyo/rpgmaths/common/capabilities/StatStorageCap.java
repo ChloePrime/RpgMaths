@@ -2,8 +2,8 @@ package moe.gensoukyo.rpgmaths.common.capabilities;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
-import moe.gensoukyo.rpgmaths.api.stats.IStatEntry;
-import moe.gensoukyo.rpgmaths.common.capabilities.util.StorageToNbt;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
+import moe.gensoukyo.rpgmaths.common.util.StorageCapToNbt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * RPG数值的存储
@@ -51,7 +50,7 @@ public class StatStorageCap
         {
             CapabilityManager.INSTANCE.register(
                     Instance.class,
-                    StorageToNbt.getInstance(),
+                    StorageCapToNbt.getInstance(),
                     Instance::new
             );
         }
@@ -59,8 +58,16 @@ public class StatStorageCap
 
     public static class Instance implements INBTSerializable<CompoundNBT>
     {
-        private final Map<IStatEntry, Float> statMap = new IdentityHashMap<>();
+        private final Map<IStatType, Float> statMap = new IdentityHashMap<>();
 
+        public float getStat(IStatType stat)
+        {
+            return statMap.getOrDefault(stat, 0f);
+        }
+        public void setStat(IStatType stat, float value)
+        {
+            statMap.put(stat, value);
+        }
         @Override
         public CompoundNBT serializeNBT()
         {
@@ -85,10 +92,6 @@ public class StatStorageCap
                             statMap.put(entry, nbt.getFloat(key))
                     )
             );
-        }
-
-        public float getStat(IStatEntry stat) {
-            return statMap.getOrDefault(stat, 0f);
         }
 
     }

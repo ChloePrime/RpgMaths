@@ -3,7 +3,7 @@ package moe.gensoukyo.rpgmaths.common.impl.stats;
 import com.google.common.base.Preconditions;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.stats.IStat;
-import moe.gensoukyo.rpgmaths.api.stats.IStatEntry;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.ResourceLocation;
@@ -14,12 +14,12 @@ import java.util.Optional;
 
 public class StatImpl implements IStat
 {
-    protected IStatEntry type;
+    protected IStatType type;
     protected final CapabilityProvider<?> owner;
     @Nullable
     protected CompoundNBT context;
 
-    public StatImpl(IStatEntry type, CapabilityProvider<?> owner)
+    public StatImpl(IStatType type, CapabilityProvider<?> owner)
     {
         this.type = type;
         this.owner = owner;

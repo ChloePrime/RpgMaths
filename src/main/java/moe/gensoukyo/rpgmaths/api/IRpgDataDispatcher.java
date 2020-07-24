@@ -1,13 +1,11 @@
 package moe.gensoukyo.rpgmaths.api;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
-public interface IRpgDataDispatcher {
+public interface IRpgDataDispatcher
+{
     /**
      * 为某个实体附加
      * @param whoHasData 判断谁拥有这个数据

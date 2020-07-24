@@ -1,12 +1,11 @@
 package moe.gensoukyo.rpgmaths.common.impl;
 
-import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.IRpgData;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
 import moe.gensoukyo.rpgmaths.api.damage.IDamageFormula;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatEntry;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import moe.gensoukyo.rpgmaths.common.ModRegistries;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -14,7 +13,6 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
 
 import java.util.Optional;
 
@@ -50,20 +48,20 @@ public class RpgMathsApiImpl implements IRpgMathsApi
     public static Capability<IRpgData> RPG_DATA_CAP;
 
     @Override
-    public IForgeRegistry<IStatEntry> getStatRegEntry()
+    public IForgeRegistry<IStatType> getStatRegistry()
     {
         return ModRegistries.getStatRegistry();
     }
 
     @Override
-    public Optional<IStatEntry> getStat(ResourceLocation id)
+    public Optional<IStatType> getStat(ResourceLocation id)
     {
         return Optional.ofNullable(ModRegistries.getStatRegistry().getValue(id));
     }
 
 
     @Override
-    public IForgeRegistry<IDamageType> getDamageTypeRegEntry()
+    public IForgeRegistry<IDamageType> getDamageTypeRegistry()
     {
         return ModRegistries.getDamageTypeRegistry();
     }
@@ -77,7 +75,7 @@ public class RpgMathsApiImpl implements IRpgMathsApi
     }
 
     @Override
-    public IForgeRegistry<IResistanceMap> getResistanceMapRegEntry()
+    public IForgeRegistry<IResistanceMap> getResistanceMapRegistry()
     {
         return ModRegistries.getResistanceMapsRegistry();
     }

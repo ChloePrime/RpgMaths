@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.capabilities.util;
+package moe.gensoukyo.rpgmaths.common.util;
 
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
@@ -12,11 +12,11 @@ import javax.annotation.Nonnull;
  * @param <T> 能力实例的类型
  * @author Chloe_koopa
  */
-public class StorageToNbt<T extends INBTSerializable<D>, D extends INBT>
+public class StorageCapToNbt<T extends INBTSerializable<D>, D extends INBT>
         implements Capability.IStorage<T>
 {
     @SuppressWarnings("rawtypes")
-    private static final StorageToNbt INSTANCE = new StorageToNbt();
+    private static final StorageCapToNbt INSTANCE = new StorageCapToNbt();
 
     /**
      * 可自动推断泛型
@@ -24,9 +24,9 @@ public class StorageToNbt<T extends INBTSerializable<D>, D extends INBT>
      */
     @SuppressWarnings("unchecked")
     public static <T extends INBTSerializable<D>, D extends INBT>
-    StorageToNbt<T, D> getInstance()
+    StorageCapToNbt<T, D> getInstance()
     {
-        return (StorageToNbt<T, D>) INSTANCE;
+        return (StorageCapToNbt<T, D>) INSTANCE;
     }
 
     @Nonnull
@@ -43,5 +43,5 @@ public class StorageToNbt<T extends INBTSerializable<D>, D extends INBT>
         instance.deserializeNBT((D) nbt);
     }
 
-    private StorageToNbt() {}
+    private StorageCapToNbt() {}
 }

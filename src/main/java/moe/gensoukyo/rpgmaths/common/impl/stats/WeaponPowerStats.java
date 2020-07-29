@@ -1,9 +1,8 @@
 package moe.gensoukyo.rpgmaths.common.impl.stats;
 
-import moe.gensoukyo.rpgmaths.api.stats.AbstractStatType;
 import moe.gensoukyo.rpgmaths.common.stats.StoredStatType;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 /**
  * POW属性
@@ -12,13 +11,13 @@ import net.minecraftforge.common.capabilities.CapabilityProvider;
 public class WeaponPowerStats extends StoredStatType {
 
     @Override
-    public float getBaseValue(CapabilityProvider<?> entity, CompoundNBT context) {
+    public float getBaseValue(ICapabilityProvider entity) {
         return 0;
     }
 
     @Override
-    public float getFinalValue(CapabilityProvider<?> owner, CompoundNBT context) {
-        return getBaseValue(owner, context);
+    public float getFinalValue(CapabilityProvider<?> owner) {
+        return getBaseValue(owner);
     }
 
     @Override

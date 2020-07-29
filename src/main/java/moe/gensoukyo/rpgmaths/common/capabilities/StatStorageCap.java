@@ -42,8 +42,12 @@ public class StatStorageCap
             "stats"
     );
 
+    /**
+     * 监听mod总线事件并注册
+     * @author Chloe_koopa
+     */
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class Registry
+    protected static class Registering
     {
         @SubscribeEvent
         public static void onSetup(FMLCommonSetupEvent event)
@@ -56,7 +60,11 @@ public class StatStorageCap
         }
     }
 
-    public static class Instance implements INBTSerializable<CompoundNBT>
+    /**
+     * Capability实例
+     */
+    public static class Instance
+            implements INBTSerializable<CompoundNBT>
     {
         private final Map<IStatType, Float> statMap = new IdentityHashMap<>();
 
@@ -96,17 +104,22 @@ public class StatStorageCap
 
     }
 
-    public static class Provider implements ICapabilityProvider
+    /**
+     * 用来黏贴到Capability提供者身上
+     * @author Chloe_koopa
+     */
+    protected static class Provider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
     {
+        @Nullable
         private Instance capInstance;
 
         @Nonnull
         @Override
-        @SuppressWarnings("unchecked")
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap,
                                                  @Nullable Direction side) {
-            return cap == TOKEN ? LazyOptional.of(() ->
-                    (T) this.getOrCreate()) : LazyOptional.empty();
+            return (cap == TOKEN)
+                    ? LazyOptional.of(this::getOrCreate).cast()
+                    : LazyOptional.empty();
         }
 
         @Nonnull
@@ -120,6 +133,18 @@ public class StatStorageCap
         }
 
         private Provider() {}
+
+        @Override
+        public CompoundNBT serializeNBT()
+        {
+            return getOrCreate().serializeNBT();
+        }
+
+        @Override
+        public void deserializeNBT(CompoundNBT nbt)
+        {
+            getOrCreate().deserializeNBT(nbt);
+        }
     }
 
     /**

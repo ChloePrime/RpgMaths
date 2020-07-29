@@ -37,7 +37,7 @@ public class ForgeRegistryArgumentType<T extends IForgeRegistryEntry<T>>
     @Override
     public T parse(StringReader reader) throws CommandSyntaxException
     {
-        return registry.getValue(new ResourceLocation(reader.readString()));
+        return registry.getValue(ResourceLocation.read(reader));
     }
 
 

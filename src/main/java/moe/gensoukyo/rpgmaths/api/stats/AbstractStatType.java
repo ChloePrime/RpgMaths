@@ -1,7 +1,6 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -27,13 +26,12 @@ public abstract class AbstractStatType
     /**
      * 本体数值+装甲内的数值+主手物品的数值
      * @param owner 数据的拥有者
-     * @param context 该stat的一些上下文
      * @return 生物本体+装备栏内+主手物品的数据值
      */
     @Override
-    public float getFinalValue(CapabilityProvider<?> owner, CompoundNBT context)
+    public float getFinalValue(CapabilityProvider<?> owner)
     {
-        AtomicReference<Float> result = new AtomicReference<>(getBaseValue(owner, context));
+        AtomicReference<Float> result = new AtomicReference<>(getBaseValue(owner));
         //添加生物的主手物品和装备的数据
         if (owner instanceof LivingEntity)
         {
@@ -44,13 +42,12 @@ public abstract class AbstractStatType
                 {
                     //lambda表达式特性
                     int finalI = i;
-                    result.updateAndGet(v -> v + getFinalValue(iItemHandler.getStackInSlot(finalI), context));
+                    result.updateAndGet(v -> v + getFinalValue(iItemHandler.getStackInSlot(finalI)));
                 }
             });
             //主手
             result.updateAndGet(v -> v + getFinalValue(
-                    livingOwner.getHeldItem(livingOwner.getActiveHand()),
-                    context
+                    livingOwner.getHeldItem(livingOwner.getActiveHand())
             ));
         }
         return result.get();

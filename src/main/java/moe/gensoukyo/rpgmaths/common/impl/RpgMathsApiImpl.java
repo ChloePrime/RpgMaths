@@ -87,5 +87,4 @@ public class RpgMathsApiImpl implements IRpgMathsApi
                 ModRegistries.getResistanceMapsRegistry().getValue(id)
         );
     }
-
 }

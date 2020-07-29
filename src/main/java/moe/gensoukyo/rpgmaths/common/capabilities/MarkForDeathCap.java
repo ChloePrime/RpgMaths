@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * 你已经死了
+ * 标记一个实体已经死亡，造成持续的极限伤害
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber

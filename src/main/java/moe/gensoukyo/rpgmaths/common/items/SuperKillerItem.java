@@ -1,12 +1,22 @@
 package moe.gensoukyo.rpgmaths.common.items;
 
+import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.RpgMathUtil;
+import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
 
@@ -28,5 +38,23 @@ public class SuperKillerItem extends SwordItem {
     {
         RpgMathUtil.superKill(target, DamageSource.GENERIC);
         return super.hitEntity(stack, target, attacker);
+    }
+
+    @ObjectHolder(RpgMathsMod.ID + ":attack")
+    public static IStatType TEST_STAT;
+
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+    {
+        RpgMathsMod.getApi().getRpgData(playerIn).ifPresent(rpgData ->
+                rpgData.getStats().ifPresent(iStatHandler ->
+                        playerIn.sendMessage(new StringTextComponent(
+                                String.valueOf(iStatHandler.getStat(TEST_STAT)) )
+                        )
+                )
+        );
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 }

@@ -3,6 +3,7 @@ package moe.gensoukyo.rpgmaths.common;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
+import moe.gensoukyo.rpgmaths.api.stats.IStatPredicate;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -27,6 +28,20 @@ public class ModRegistries
         return STAT_REGISTRY;
     }
 
+    //RPG数据生效条件
+
+    private static final ResourceLocation STAT_PREDICATE_REG_NAME =
+            new ResourceLocation(RpgMathsMod.ID, "stats");
+    private static final IForgeRegistry<IStatPredicate> STAT_PREDICATE_REGISTRY =
+            new RegistryBuilder<IStatPredicate>()
+                    .setName(STAT_PREDICATE_REG_NAME)
+                    .setType(IStatPredicate.class)
+                    .create();
+    public static IForgeRegistry<IStatPredicate> getStatConditionRegistry()
+    {
+        return STAT_PREDICATE_REGISTRY;
+    }
+
     //伤害类型
 
     private static final ResourceLocation DAMAGE_TYPE_REG_NAME =
@@ -35,7 +50,7 @@ public class ModRegistries
             .setName(DAMAGE_TYPE_REG_NAME)
             .setType(IDamageType.class)
             .allowModification()
-            .create();;
+            .create();
     public static IForgeRegistry<IDamageType> getDamageTypeRegistry()
     {
         return DAMAGE_TYPE_REGISTRY;
@@ -49,7 +64,7 @@ public class ModRegistries
             .setName(RESISTANCE_REG_NAME)
             .setType(IResistanceMap.class)
             .allowModification()
-            .create();;
+            .create();
 
     public static IForgeRegistry<IResistanceMap> getResistanceMapsRegistry()
     {

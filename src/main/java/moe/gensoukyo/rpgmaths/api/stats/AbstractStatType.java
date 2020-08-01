@@ -1,13 +1,19 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
+import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -29,7 +35,7 @@ public abstract class AbstractStatType
      * @return 生物本体+装备栏内+主手物品的数据值
      */
     @Override
-    public float getFinalValue(CapabilityProvider<?> owner)
+    public float getFinalValue(ICapabilityProvider owner)
     {
         AtomicReference<Float> result = new AtomicReference<>(getBaseValue(owner));
         //添加生物的主手物品和装备的数据
@@ -51,5 +57,44 @@ public abstract class AbstractStatType
             ));
         }
         return result.get();
+    }
+
+
+    private ITextComponent cachedTrKey;
+    @Nonnull
+    @Override
+    public ITextComponent getName()
+    {
+        Objects.requireNonNull(this.getRegistryName(), "Stat Name Got Before Named");
+        if (this.cachedTrKey == null)
+        {
+            Objects.requireNonNull(getRegistryName());
+            this.cachedTrKey = new TranslationTextComponent(
+                    String.format(I18N_KEY_PATTERN, getRegistryName()
+                            .toString().replace(":", ".")
+                    )
+            );
+        }
+        return this.cachedTrKey;
+    }
+
+    public static final String DESC_KEY_PATTERN = "%s." + RpgMathsMod.ID + ".stat.%s";
+
+    @Override
+    public ITextComponent getDescription()
+    {
+        return getDescKey();
+    }
+
+    private ITextComponent cachedDescKey;
+    private ITextComponent getDescKey()
+    {
+        Objects.requireNonNull(this.getRegistryName(), "Stat Description Got Before Named");
+        ResourceLocation regName = this.getRegistryName();
+        return (cachedDescKey == null)
+                ? new TranslationTextComponent(
+                        String.format(DESC_KEY_PATTERN, regName.getNamespace(), regName.getPath())
+                )
+                : cachedDescKey;
     }
 }

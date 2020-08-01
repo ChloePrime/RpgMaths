@@ -5,7 +5,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.realmsclient.client.RealmsClient;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
@@ -15,9 +14,6 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.forgespi.Environment;
-import net.minecraftforge.server.permission.PermissionAPI;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -46,7 +42,9 @@ public class RpgMathCommand
                 //rpgmaths get
                 .then(literal("get")
                         .then(argument(ARGUMENT_STAT_NAME,
-                                ForgeRegistryArgumentType.of(RpgMathsMod.getApi().getStatRegistry()))
+                                ForgeRegistryArgumentType.of(RpgMathsMod.getApi().
+                                        getRegisteries().getStats()
+                                ))
 
                                 .executes(GET)
                         )
@@ -54,7 +52,8 @@ public class RpgMathCommand
                 //rpgmaths set
                 .then(literal("set")
                         .then(argument(ARGUMENT_STAT_NAME,
-                                ForgeRegistryArgumentType.of(RpgMathsMod.getApi().getStatRegistry()))
+                                ForgeRegistryArgumentType.of(
+                                        RpgMathsMod.getApi().getRegisteries().getStats()))
                                 .then(argument(ARGUMENT_VALUE, FloatArgumentType.floatArg())
 
                                         .executes(SET)
@@ -72,7 +71,7 @@ public class RpgMathCommand
         IStatHandler handler = getStatHandler(context);
         IStatType statType = context.getArgument(ARGUMENT_STAT_NAME, IStatType.class);
 
-        final float statValue = handler.getStat(statType);
+        final float statValue = handler.getFinalValue(statType);
 
         context.getSource().sendFeedback(new StringTextComponent(String.valueOf(statValue)), true);
         return (int) statValue;
@@ -87,7 +86,7 @@ public class RpgMathCommand
         IStatType statType = context.getArgument(ARGUMENT_STAT_NAME, IStatType.class);
         final float value = context.getArgument(ARGUMENT_VALUE, Float.class);
 
-        handler.setStat(statType, value);
+        handler.setBaseValue(statType, value);
         return (int) value;
     };
 

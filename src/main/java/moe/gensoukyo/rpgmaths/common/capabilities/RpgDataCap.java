@@ -144,13 +144,13 @@ public class RpgDataCap
         }
     }
 
-    protected static class Provider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+    protected static class CapProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
     {
         @Nullable
         private IRpgData capInstance;
         private final ICapabilityProvider owner;
 
-        public Provider(ICapabilityProvider owner)
+        public CapProvider(ICapabilityProvider owner)
         {
             this.owner = owner;
         }
@@ -210,7 +210,7 @@ public class RpgDataCap
         ICapabilityProvider o = event.getObject();
         if (o != null)
         {
-            event.addCapability(NAME, new Provider(o));
+            event.addCapability(NAME, new CapProvider(o));
         }
     }
 }

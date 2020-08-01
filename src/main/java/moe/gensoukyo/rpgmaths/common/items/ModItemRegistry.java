@@ -9,13 +9,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 /**
  * @author Chloe_koopa
  */
-public class ItemRegistry {
+public class ModItemRegistry {
     private static final DeferredRegister<Item> ITEMS =
             new DeferredRegister<>(ForgeRegistries.ITEMS, RpgMathsMod.ID);
 
     public static void init()
     {
         ITEMS.register("super_killer", SuperKillerItem::new);
+
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }

@@ -96,7 +96,7 @@ public class StatStorageCap
             IRpgMathsApi api = RpgMathsMod.getApi();
             //把key从字符串转换成IStatEntry，然后和value一起塞入statMap
             nbt.keySet().forEach(key ->
-                    api.getStat(new ResourceLocation(key)).ifPresent(entry ->
+                    api.getRegisteries().getStat(new ResourceLocation(key)).ifPresent(entry ->
                             statMap.put(entry, nbt.getFloat(key))
                     )
             );

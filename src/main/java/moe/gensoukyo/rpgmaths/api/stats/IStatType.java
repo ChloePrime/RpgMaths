@@ -1,6 +1,7 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
-import net.minecraftforge.common.capabilities.CapabilityProvider;
+import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -10,20 +11,22 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  */
 public interface IStatType extends IForgeRegistryEntry<IStatType>
 {
+    String I18N_KEY_PATTERN = RpgMathsMod.ID + ".stat.%s";
     /**
      * 返回该实体的这项基础数值
-     * @param entity 数据的拥有者
+     * @param owner 数据的拥有者
      * @return 不包括装备加成的数据
      */
-    float getBaseValue(ICapabilityProvider entity);
+    float getBaseValue(ICapabilityProvider owner);
 
     /**
      * 设置某个属性的基础值
      * @apiNote 不保证对所有值有效
-     * @param entity 数据的拥有者
+     * @param owner 数据的拥有者
      * @param value 要将这个属性设置为的值（基础值）
+     * @return 设置返回值是否有效
      */
-    boolean setBaseValue(ICapabilityProvider entity,
+    boolean setBaseValue(ICapabilityProvider owner,
                          float value);
 
     /**
@@ -32,12 +35,18 @@ public interface IStatType extends IForgeRegistryEntry<IStatType>
      * @param entity 数据的拥有者
      * @return 包括装备加成的数据
      */
-    float getFinalValue(CapabilityProvider<?> entity);
+    float getFinalValue(ICapabilityProvider entity);
 
     /**
      * 获取描述
      * @apiNote 返回翻译密钥
      * @return 关于该项属性的描述
      */
-    String getDescription();
+    ITextComponent getDescription();
+
+    /**
+     * 获取属性的本地化密钥
+     * @return 属性的名字
+     */
+    ITextComponent getName();
 }

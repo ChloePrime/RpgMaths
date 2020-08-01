@@ -2,6 +2,8 @@ package moe.gensoukyo.rpgmaths.common;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.IRpgData;
+import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
+import moe.gensoukyo.rpgmaths.common.impl.RpgMathsApiImpl;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,8 +31,10 @@ public class DamageHandler
         ICapabilityProvider attacker = event.getSource().getTrueSource();
         if (attacker == null) { return; }
 
+        IRpgMathsApi api = RpgMathsMod.getApi();
+
         LivingEntity victim = event.getEntityLiving();
-        boolean canRpg = (attacker.getCapability(RPG_CAP).isPresent())
+        boolean canRpg = (api.getRpgData(attacker).isPresent())
                 && (victim.getCapability(RPG_CAP).isPresent());
         if (!canRpg) { return; }
 

@@ -1,7 +1,6 @@
 package moe.gensoukyo.rpgmaths.common.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.api.stats.AbstractStatType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
@@ -10,21 +9,32 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * 将一个Attribute作为实现方式的RPG属性
  * @see IAttribute
+ * @see AdditionalAttributeHandler
  * @author Chloe_koopa
  */
 public class AttributeBackendStat
-        extends AbstractStatType
+        extends StoredStatType
 {
     @Nullable
     private IAttribute backend;
 
     static final Set<AttributeBackendStat> STATS_WITH_CUSTOM_ATTRIBUTE = new LinkedHashSet<>();
+    static final Set<AttributeBackendStat> INSTANCES = new LinkedHashSet<>();
+    protected static final Map<String, AttributeBackendStat> BY_ATTR_NAME = new HashMap<>();
+
+    @Nullable
+    public static AttributeBackendStat byAttributeName(String attribute)
+    {
+        return BY_ATTR_NAME.getOrDefault(attribute, null);
+    }
 
     /**
      * 指定一个attribute作为后端实现
@@ -33,6 +43,11 @@ public class AttributeBackendStat
     public AttributeBackendStat(@Nullable IAttribute backend)
     {
         this.backend = backend;
+        if (backend != null)
+        {
+            putBackend();
+        }
+        INSTANCES.add(this);
     }
 
     /**
@@ -66,8 +81,14 @@ public class AttributeBackendStat
                             replace(":",".")),
                     0d, -Double.MAX_VALUE, Double.MAX_VALUE
             );
+            putBackend();
         }
         return this.backend;
+    }
+
+    private void putBackend()
+    {
+        BY_ATTR_NAME.put(this.getBackend().getName(), this);
     }
 
     @Override
@@ -107,6 +128,25 @@ public class AttributeBackendStat
     @Override
     public ITextComponent getDescription() {
         return null;
+    }
+
+
+    void storeToCap(ICapabilityProvider owner)
+    {
+        if (owner instanceof LivingEntity)
+        {
+            LivingEntity living = (LivingEntity) owner;
+            super.setBaseValue(living, (float) living.getAttribute(this.getBackend()).getBaseValue());
+        }
+    }
+
+    void recoverFromCap(ICapabilityProvider owner, ICapabilityProvider old)
+    {
+        if (owner instanceof LivingEntity)
+        {
+            LivingEntity living = (LivingEntity) owner;
+            living.getAttribute(this.getBackend()).setBaseValue(super.getBaseValue(old));
+        }
     }
 
     /**

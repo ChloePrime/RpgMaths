@@ -1,7 +1,7 @@
 package moe.gensoukyo.rpgmaths;
 
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
-import moe.gensoukyo.rpgmaths.common.ModStats;
+import moe.gensoukyo.rpgmaths.common.stats.ModStats;
 import moe.gensoukyo.rpgmaths.common.impl.RpgMathsApiImpl;
 import moe.gensoukyo.rpgmaths.common.items.ModItemRegistry;
 import net.minecraftforge.fml.ModLoadingContext;

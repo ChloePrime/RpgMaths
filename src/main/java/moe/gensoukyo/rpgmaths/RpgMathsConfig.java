@@ -1,5 +1,6 @@
 package moe.gensoukyo.rpgmaths;
 
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.*;
 
@@ -9,9 +10,10 @@ import net.minecraftforge.common.ForgeConfigSpec.*;
  */
 public class RpgMathsConfig
 {
-    public static ForgeConfigSpec COMMON_CONFIG;
-    public static BooleanValue FIX_ATTRIBUTE;
-    public static BooleanValue USE_CUSTOM_TOOLTIP;
+    public static final ForgeConfigSpec COMMON_CONFIG;
+    public static final BooleanValue FIX_ATTRIBUTE;
+    public static final BooleanValue USE_CUSTOM_TOOLTIP;
+    public static final EnumValue<TextFormatting> VANILLA_ATTRIBUTE_STYLE;
     static
     {
         final Builder builder = new Builder();
@@ -21,6 +23,10 @@ public class RpgMathsConfig
         USE_CUSTOM_TOOLTIP = builder.
                 comment("Use Custom Tooltip for Attribute Modifiers")
                 .define("use_custom_tooltip", true);
+        VANILLA_ATTRIBUTE_STYLE = builder.
+                comment("Style for vanilla attribute tooltip,",
+                        "Note: Style for Rpg Stats are defined in tha Language File.")
+                .defineEnum("van_attr_style", TextFormatting.DARK_GREEN);
         builder.pop();
         COMMON_CONFIG = builder.build();
     }

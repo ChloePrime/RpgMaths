@@ -1,6 +1,7 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import moe.gensoukyo.rpgmaths.common.util.Order;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +25,14 @@ public abstract class AbstractStatType
         extends ForgeRegistryEntry<IStatType>
         implements IStatType
 {
+    protected Order order = new Order();
+
+    @Override
+    public Order getOrder()
+    {
+        return this.order;
+    }
+
     @CapabilityInject(IItemHandler.class)
     private static Capability<IItemHandler> ITEM_HANDLER;
 

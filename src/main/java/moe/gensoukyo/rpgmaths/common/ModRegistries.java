@@ -3,7 +3,6 @@ package moe.gensoukyo.rpgmaths.common;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatPredicate;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -26,20 +25,6 @@ public class ModRegistries
     public static IForgeRegistry<IStatType> getStatRegistry()
     {
         return STAT_REGISTRY;
-    }
-
-    //RPG数据生效条件
-
-    private static final ResourceLocation STAT_PREDICATE_REG_NAME =
-            new ResourceLocation(RpgMathsMod.ID, "stats");
-    private static final IForgeRegistry<IStatPredicate> STAT_PREDICATE_REGISTRY =
-            new RegistryBuilder<IStatPredicate>()
-                    .setName(STAT_PREDICATE_REG_NAME)
-                    .setType(IStatPredicate.class)
-                    .create();
-    public static IForgeRegistry<IStatPredicate> getStatConditionRegistry()
-    {
-        return STAT_PREDICATE_REGISTRY;
     }
 
     //伤害类型

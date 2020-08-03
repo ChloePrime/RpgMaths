@@ -1,4 +1,11 @@
 {
-  "attribute.name.rpgmaths.stat.rpgmaths.art_attack": "§bArts Damage",
-  "attribute.name.rpgmaths.stat.rpgmaths.art_defense": "§bArts Defense"
+  "rpgmaths.stat.rpgmaths.attack": "§fAttack",
+  "rpgmaths.stat.rpgmaths.defense": "§fDefense",
+  "rpgmaths.stat.rpgmaths.art_attack": "§bArts Attack",
+  "rpgmaths.stat.rpgmaths.art_defense": "§bArts Defense",
+  "rpgmaths.attribute.modifier.0": "%s%s %s",
+  "rpgmaths.attribute.modifier.1": "%s%s Base     %s",
+  "rpgmaths.attribute.modifier.2": "%s%s Equipped %s",
+  "rpgmaths.attribute.modifier.operator.add": "§a+",
+  "rpgmaths.attribute.modifier.operator.subtract": "§c-"
 }

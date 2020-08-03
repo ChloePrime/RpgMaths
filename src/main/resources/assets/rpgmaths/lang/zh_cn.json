@@ -1,4 +1,11 @@
 {
-  "attribute.name.rpgmaths.stat.rpgmaths.art_attack": "§b法术伤害",
-  "attribute.name.rpgmaths.stat.rpgmaths.art_defense": "§b法术防御"
+  "rpgmaths.stat.rpgmaths.attack": "§f攻击力",
+  "rpgmaths.stat.rpgmaths.defense": "§f防御力",
+  "rpgmaths.stat.rpgmaths.art_attack": "§b法术攻击",
+  "rpgmaths.stat.rpgmaths.art_defense": "§b法术防御",
+  "rpgmaths.attribute.modifier.0": "%s%s %s",
+  "rpgmaths.attribute.modifier.1": "%s%s %s§7（不含装备）",
+  "rpgmaths.attribute.modifier.2": "%s%s %s§7（包括装备）",
+  "rpgmaths.attribute.modifier.operator.add": "§a+",
+  "rpgmaths.attribute.modifier.operator.subtract": "§c-"
 }

@@ -1,16 +1,22 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import moe.gensoukyo.rpgmaths.common.util.Order;
+import moe.gensoukyo.rpgmaths.common.util.Ordered;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * 一项属性
  * @author Chloe_koopa
  */
-public interface IStatType extends IForgeRegistryEntry<IStatType>
+public interface IStatType extends IForgeRegistryEntry<IStatType>, Ordered<IStatType>
 {
+    /**
+     * rpgmaths.stat.(namespace).(path)
+     */
     String I18N_KEY_PATTERN = RpgMathsMod.ID + ".stat.%s";
     /**
      * 返回该实体的这项基础数值

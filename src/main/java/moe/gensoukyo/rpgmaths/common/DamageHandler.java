@@ -27,6 +27,7 @@ public class DamageHandler
     public static void onDamageEvent(LivingHurtEvent event)
     {
         if (event.getEntity().getEntityWorld().isRemote()) { return; }
+        if (RpgMathsMod.getApi().getDamageFormula() == null) { return; }
         //判断是否都有RPG数据
         ICapabilityProvider attacker = event.getSource().getTrueSource();
         if (attacker == null) { return; }

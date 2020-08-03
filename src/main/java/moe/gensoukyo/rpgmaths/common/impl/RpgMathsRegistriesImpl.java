@@ -3,7 +3,6 @@ package moe.gensoukyo.rpgmaths.common.impl;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsRegistries;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatPredicate;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import moe.gensoukyo.rpgmaths.common.ModRegistries;
 import net.minecraft.util.ResourceLocation;
@@ -52,17 +51,5 @@ public class RpgMathsRegistriesImpl implements IRpgMathsRegistries
     public final Optional<IResistanceMap> getResistanceMap(ResourceLocation id)
     {
         return Optional.ofNullable(this.getResistanceMaps().getValue(id));
-    }
-
-    @Override
-    public IForgeRegistry<IStatPredicate> getStatConditions()
-    {
-        return ModRegistries.getStatConditionRegistry();
-    }
-
-    @Override
-    public Optional<IStatPredicate> getStatCondition(ResourceLocation id)
-    {
-        return Optional.ofNullable(this.getStatConditions().getValue(id));
     }
 }

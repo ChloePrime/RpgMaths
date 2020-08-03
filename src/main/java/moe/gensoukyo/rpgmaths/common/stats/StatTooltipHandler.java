@@ -1,11 +1,8 @@
 package moe.gensoukyo.rpgmaths.common.stats;
 
-import com.google.common.collect.ImmutableSet;
 import moe.gensoukyo.rpgmaths.RpgMathsConfig;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -16,10 +13,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -47,6 +42,7 @@ public class StatTooltipHandler
     {
         try
         {
+            //如果不提取哪一块是Attribute的Tooltip的话，就无法对tooltip排序
             for (int i = 0; i < tooltip.size(); i++)
             {
                 ITextComponent cur = tooltip.get(i);
@@ -101,6 +97,7 @@ public class StatTooltipHandler
      * 例："在主手时："
      */
     private static final String VAN_TOOLTIP_HEADER = "item.modifiers.";
+    private static final String VAN_POTION_TOOLTIP_HEADER = "potion.whenDrank";
     /**
      * 例："+5攻击伤害"
      */
@@ -109,8 +106,8 @@ public class StatTooltipHandler
     {
         if (textComponent instanceof TranslationTextComponent)
         {
-            TranslationTextComponent tr = (TranslationTextComponent) textComponent;
-            return tr.getKey().startsWith(VAN_TOOLTIP_HEADER);
+            String key = ((TranslationTextComponent) textComponent).getKey();
+            return (key.startsWith(VAN_TOOLTIP_HEADER) || key.startsWith(VAN_POTION_TOOLTIP_HEADER));
         }
         return false;
     }
@@ -206,11 +203,6 @@ public class StatTooltipHandler
         final boolean isNegative;
         final int op;
         float value;
-
-        int getSign()
-        {
-            return isNegative ? -1 : 1;
-        }
     }
 
 
@@ -231,7 +223,6 @@ public class StatTooltipHandler
                     }
                     return l1.stat.compareTo(l2.stat);
                 })
-                //.peek(StatTooltipHandler::correctVanSpecialAttr)
                 .map(l -> new TranslationTextComponent(
                         NEW_ATTR_KEY + l.op,
                         //运算符名称
@@ -246,29 +237,6 @@ public class StatTooltipHandler
                                 : l.stat.getName()
                 ))
                 .collect(Collectors.toList());
-    }
-
-    private static final Set<IAttribute> ATTR_TO_CORRECT = ImmutableSet.of(
-            SharedMonsterAttributes.ATTACK_DAMAGE,
-            SharedMonsterAttributes.ATTACK_SPEED
-    );
-
-    /**
-     * 把原版对攻击力和攻击速度的预处理算回去
-     * 原版会把攻击力和攻击速度算作最终值
-     * 这个方法把它改回增量
-     */
-    private static void correctVanSpecialAttr(LineInfo line)
-    {
-        if ((line.stat == null) || (curPlayer == null))
-        {
-            return;
-        }
-        if (ATTR_TO_CORRECT.contains(line.stat.getBackend()))
-        {
-            //由于value是绝对值，故为正时需要减去，为负时需要加上
-            line.value -= line.getSign() * curPlayer.getAttribute(line.stat.getBackend()).getBaseValue();
-        }
     }
 
     private static String formatAttrValue(LineInfo info)

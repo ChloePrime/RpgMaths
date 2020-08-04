@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.impl.stats;
+package moe.gensoukyo.rpgmaths.api.impl.stats;
 
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;

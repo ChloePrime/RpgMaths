@@ -25,18 +25,16 @@ public abstract class DamageFormulaBase implements IDamageFormula
         return getFinalValue(attacker, ATK);
     }
 
-    protected float getFinalDefense(ICapabilityProvider attacker)
+    protected float getFinalDefense(ICapabilityProvider victim)
     {
-        return getFinalValue(attacker, DEF);
+        return getFinalValue(victim, DEF);
     }
 
     protected float getFinalValue(ICapabilityProvider attacker, IStatType type)
     {
         AtomicReference<Float> value = Atomics.newReference(0f);
         API.getRpgData(attacker).ifPresent(iRpgData ->
-                iRpgData.getStats().ifPresent(iStatHandler ->
-                        value.set(iStatHandler.getFinalValue(type))
-                )
+                iRpgData.getStats().getFinalValue(type)
         );
         return value.get();
     }

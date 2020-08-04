@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.stats;
+package moe.gensoukyo.rpgmaths.api.impl.stats;
 
 import moe.gensoukyo.rpgmaths.api.stats.AbstractStatType;
 import moe.gensoukyo.rpgmaths.common.capabilities.StatStorageCap;

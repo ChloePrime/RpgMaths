@@ -1,7 +1,7 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.common.util.Order;
+import moe.gensoukyo.rpgmaths.api.util.Order;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -27,6 +27,7 @@ public abstract class AbstractStatType
 {
     protected Order order = new Order();
 
+    @Nonnull
     @Override
     public Order getOrder()
     {
@@ -48,18 +49,18 @@ public abstract class AbstractStatType
     {
         AtomicReference<Float> result = new AtomicReference<>(getBaseValue(owner));
         //添加生物的主手物品和装备的数据
+        //装备
+        owner.getCapability(ITEM_HANDLER, DIR_GET_ARMOR).ifPresent(iItemHandler -> {
+            for (int i = 0; i < iItemHandler.getSlots(); i++)
+            {
+                //lambda表达式特性
+                int finalI = i;
+                result.updateAndGet(v -> v + getFinalValue(iItemHandler.getStackInSlot(finalI)));
+            }
+        });
         if (owner instanceof LivingEntity)
         {
             LivingEntity livingOwner = (LivingEntity) owner;
-            //装备
-            livingOwner.getCapability(ITEM_HANDLER, DIR_GET_ARMOR).ifPresent(iItemHandler -> {
-                for (int i = 0; i < iItemHandler.getSlots(); i++)
-                {
-                    //lambda表达式特性
-                    int finalI = i;
-                    result.updateAndGet(v -> v + getFinalValue(iItemHandler.getStackInSlot(finalI)));
-                }
-            });
             //主手
             result.updateAndGet(v -> v + getFinalValue(
                     livingOwner.getHeldItem(livingOwner.getActiveHand())
@@ -100,10 +101,12 @@ public abstract class AbstractStatType
     {
         Objects.requireNonNull(this.getRegistryName(), "Stat Description Got Before Named");
         ResourceLocation regName = this.getRegistryName();
-        return (cachedDescKey == null)
-                ? new TranslationTextComponent(
-                        String.format(DESC_KEY_PATTERN, regName.getNamespace(), regName.getPath())
-                )
-                : cachedDescKey;
+        if (this.cachedDescKey == null)
+        {
+            this.cachedDescKey = new TranslationTextComponent(
+                    String.format(DESC_KEY_PATTERN, regName.getNamespace(), regName.getPath())
+            );
+        }
+        return this.cachedDescKey;
     }
 }

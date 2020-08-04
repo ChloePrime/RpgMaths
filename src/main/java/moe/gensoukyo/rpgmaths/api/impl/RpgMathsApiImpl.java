@@ -1,21 +1,13 @@
-package moe.gensoukyo.rpgmaths.common.impl;
+package moe.gensoukyo.rpgmaths.api.impl;
 
 import moe.gensoukyo.rpgmaths.api.IRpgData;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsRegistries;
 import moe.gensoukyo.rpgmaths.api.damage.IDamageFormula;
-import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
-import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatType;
-import moe.gensoukyo.rpgmaths.common.ModRegistries;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.Optional;
 
 /**
  * API的默认实现

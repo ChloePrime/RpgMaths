@@ -48,6 +48,8 @@ public class ModRegistries
     private static final IForgeRegistry<IResistanceMap> RESISTANCE_MAPS_REGISTRY = new RegistryBuilder<IResistanceMap>()
             .setName(RESISTANCE_REG_NAME)
             .setType(IResistanceMap.class)
+            .set(key -> IResistanceMap.DEFAULT)
+            .set((key, isNetwork) -> IResistanceMap.DEFAULT)
             .allowModification()
             .create();
 

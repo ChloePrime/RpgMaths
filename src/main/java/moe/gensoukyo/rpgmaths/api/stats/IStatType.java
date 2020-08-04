@@ -1,11 +1,9 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.common.util.Order;
-import moe.gensoukyo.rpgmaths.common.util.Ordered;
+import moe.gensoukyo.rpgmaths.api.util.Ordered;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**

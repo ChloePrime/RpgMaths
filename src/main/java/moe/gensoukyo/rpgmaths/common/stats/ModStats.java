@@ -1,12 +1,12 @@
 package moe.gensoukyo.rpgmaths.common.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ObjectHolder;
@@ -22,10 +22,10 @@ public class ModStats
 
     public static void init()
     {
-        STATS.register("attack", () -> new AttributeBackendStat(SharedMonsterAttributes.ATTACK_DAMAGE));
-        STATS.register("defense", () -> new AttributeBackendStat(SharedMonsterAttributes.ARMOR));
-        STATS.register("art_attack", AttributeBackendStat::new);
-        STATS.register("art_defense", AttributeBackendStat::new);
+        STATS.register("attack", () -> new AttributeStatType(SharedMonsterAttributes.ATTACK_DAMAGE));
+        STATS.register("defense", () -> new AttributeStatType(SharedMonsterAttributes.ARMOR));
+        STATS.register("art_attack", AttributeStatType::new);
+        STATS.register("art_defense", AttributeStatType::new);
 
         STATS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -37,6 +37,8 @@ public class ModStats
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class DefaultSorting
     {
+        private DefaultSorting() {}
+
         @ObjectHolder("attack")
         public static IStatType ATK;
         @ObjectHolder("defense")

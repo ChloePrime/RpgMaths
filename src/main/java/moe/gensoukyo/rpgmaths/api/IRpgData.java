@@ -27,5 +27,5 @@ public interface IRpgData extends INBTSerializable<CompoundNBT>
      * 获取属性列表
      * @return 属性列表，如果宿主没有RPG数据，那么返回empty
      */
-    Optional<IStatHandler> getStats();
+    IStatHandler getStats();
 }

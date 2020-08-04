@@ -1,11 +1,7 @@
 package moe.gensoukyo.rpgmaths.api.damage.type;
 
-import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.common.impl.damage.type.AbstractResistanceMap;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.IForgeRegistry;
+import moe.gensoukyo.rpgmaths.api.impl.damage.type.AbstractResistanceMap;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryBuilder;
 
 /**
  * 攻击抗性
@@ -31,14 +27,4 @@ public interface IResistanceMap extends IForgeRegistryEntry<IResistanceMap>
         }
     };
 
-    ResourceLocation REG_NAME =
-            new ResourceLocation(RpgMathsMod.ID, "resistance_template");
-    IForgeRegistry<IResistanceMap> REGISTRY = new RegistryBuilder<IResistanceMap>()
-            .setName(REG_NAME)
-            //dummy
-            .set(key -> DEFAULT)
-            //missing
-            .set(((key, isNetwork) -> DEFAULT))
-            .allowModification()
-            .create();
 }

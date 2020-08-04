@@ -1,4 +1,6 @@
-package moe.gensoukyo.rpgmaths.common.util;
+package moe.gensoukyo.rpgmaths.api.util;
+
+import com.google.common.base.Preconditions;
 
 import javax.annotation.Nonnull;
 
@@ -12,7 +14,7 @@ public interface Ordered<I extends Ordered<I>> extends Comparable<I>
      * 获取标准排序器
      * @return 标准排序器 {@link Order}
      */
-    Order getOrder();
+    @Nonnull Order getOrder();
 
     /**
      * 设置主要优先级
@@ -28,8 +30,10 @@ public interface Ordered<I extends Ordered<I>> extends Comparable<I>
      * @apiNote 会将this的主要优先级设置为和that相同
      * @param that 另一个对象
      */
-    default void moveBefore(I that)
+    @SuppressWarnings("unused")
+    default void moveBefore(@Nonnull I that)
     {
+        Preconditions.checkNotNull(that);
         getOrder().moveBefore(that.getOrder());
     }
 
@@ -39,8 +43,9 @@ public interface Ordered<I extends Ordered<I>> extends Comparable<I>
      * @apiNote 会将this的主要优先级设置为和that相同
      * @param that 另一个对象
      */
-    default void moveAfter(I that)
+    default void moveAfter(@Nonnull I that)
     {
+        Preconditions.checkNotNull(that);
         getOrder().moveAfter(that.getOrder());
     }
 

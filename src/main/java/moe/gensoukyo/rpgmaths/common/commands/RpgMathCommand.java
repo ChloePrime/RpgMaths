@@ -101,7 +101,7 @@ public class RpgMathCommand
         }
         AtomicReference<IStatHandler> result = new AtomicReference<>(null);
         RpgMathsMod.getApi().getRpgData(entity).ifPresent(
-                rpgData -> result.set(rpgData.getStats().orElse(null))
+                rpgData -> result.set(rpgData.getStats())
         );
         Objects.requireNonNull(result.get());
         return result.get();

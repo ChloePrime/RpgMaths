@@ -2,6 +2,7 @@ package moe.gensoukyo.rpgmaths.common.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsConfig;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -143,7 +144,7 @@ public class StatTooltipHandler
     public static final String NEW_ATTR_OP_KEY = NEW_ATTR_KEY + "operator.";
 
     /**
-     * 从一个代表一行Attribute的本地化文本中提取 {@link AttributeBackendStat}
+     * 从一个代表一行Attribute的本地化文本中提取 {@link AttributeStatType}
      */
     @Nullable
     private static LineInfo extractLine(ITextComponent input)
@@ -195,11 +196,11 @@ public class StatTooltipHandler
             this.isNegative = isNegative;
             this.attrName = attrName;
             this.value = value;
-            this.stat = AttributeBackendStat.byAttributeName(this.attrName);
+            this.stat = AttributeStatType.byAttributeName(this.attrName);
         }
         final String attrName;
         @Nullable
-        final AttributeBackendStat stat;
+        final AttributeStatType stat;
         final boolean isNegative;
         final int op;
         float value;

@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.impl.damage.type;
+package moe.gensoukyo.rpgmaths.api.impl.damage.type;
 
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
 import net.minecraftforge.registries.ForgeRegistryEntry;

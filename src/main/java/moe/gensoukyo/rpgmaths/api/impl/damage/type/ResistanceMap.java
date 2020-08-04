@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.impl.damage.type;
+package moe.gensoukyo.rpgmaths.api.impl.damage.type;
 
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IMutableResistanceMap;
@@ -13,20 +13,21 @@ import java.util.Map;
  * 例如一个属性可能有物理/魔法的区分，以及地水火风四元素的区分
  * 这个时候，物理/魔法就作为parent
  */
-public class StandardResistanceMap
+public class ResistanceMap
         extends AbstractResistanceMap
         implements IMutableResistanceMap
 {
     public IResistanceMap parent;
-    public StandardResistanceMap(@Nullable IResistanceMap parent)
+    public ResistanceMap(@Nullable IResistanceMap parent)
     {
         this.parent = parent;
     }
 
-    public StandardResistanceMap()
+    public ResistanceMap()
     {
         this(null);
     }
+
     protected Map<IDamageType, Double> values;
 
     @Override
@@ -44,9 +45,18 @@ public class StandardResistanceMap
     }
 
     @Override
-    public void setMultiplier(IDamageType type, double value)
+    public ResistanceMap setMultiplier(IDamageType type, double value)
     {
         values.put(type, value);
+        return this;
     }
 
+    @Override
+    public String toString()
+    {
+        return "ResistanceMap{" +
+                "parent=" + parent +
+                ", values=" + values +
+                '}';
+    }
 }

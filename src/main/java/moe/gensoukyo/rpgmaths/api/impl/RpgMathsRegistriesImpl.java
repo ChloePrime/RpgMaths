@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.impl;
+package moe.gensoukyo.rpgmaths.api.impl;
 
 import moe.gensoukyo.rpgmaths.api.IRpgMathsRegistries;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;

@@ -50,9 +50,8 @@ public class SuperKillerItem extends SwordItem
         if (worldIn.isRemote()) { return super.onItemRightClick(worldIn, playerIn, handIn); }
 
         RpgMathsMod.getApi().getRpgData(playerIn).ifPresent(rpgData ->
-                rpgData.getStats().ifPresent(iStatHandler ->
-                        playerIn.sendMessage(new StringTextComponent(
-                                String.valueOf(iStatHandler.getBaseValue(TEST_STAT)) )
+                playerIn.sendMessage(new StringTextComponent(
+                                String.valueOf(rpgData.getStats().getBaseValue(TEST_STAT))
                         )
                 )
         );

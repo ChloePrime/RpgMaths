@@ -4,7 +4,8 @@ import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.IRpgData;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
-import moe.gensoukyo.rpgmaths.common.impl.stats.StatHandlerImpl;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
+import moe.gensoukyo.rpgmaths.api.impl.stats.StatHandlerImpl;
 import moe.gensoukyo.rpgmaths.common.util.StorageCapToNbt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -57,8 +58,26 @@ public class RpgDataCap
         }
 
         @Override
-        public Optional<IStatHandler> getStats() {
-            return Optional.empty();
+        public IStatHandler getStats() {
+            return new IStatHandler() {
+                @Override
+                public float getBaseValue(IStatType type)
+                {
+                    return 0;
+                }
+
+                @Override
+                public float getFinalValue(IStatType type)
+                {
+                    return 0;
+                }
+
+                @Override
+                public boolean setBaseValue(IStatType type, float value)
+                {
+                    return false;
+                }
+            };
         }
 
         @Override
@@ -126,9 +145,9 @@ public class RpgDataCap
         }
 
         @Override
-        public Optional<IStatHandler> getStats()
+        public IStatHandler getStats()
         {
-            return Optional.of(this.statHandler);
+            return this.statHandler;
         }
 
         @Override

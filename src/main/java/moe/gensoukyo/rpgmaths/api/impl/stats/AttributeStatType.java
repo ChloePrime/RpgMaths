@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.stats;
+package moe.gensoukyo.rpgmaths.api.impl.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import net.minecraft.entity.LivingEntity;
@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,23 +16,26 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 将一个Attribute作为实现方式的RPG属性
+ * 将一个Attribute作为实现方式的RPG属性。
+ * 用此对象 构建/包装 的Attribute不会因玩家死亡而重置，
+ * 并且会使用自己的命名。
  * @see IAttribute
- * @see AdditionalAttributeHandler
+ * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler
+ * @see moe.gensoukyo.rpgmaths.common.stats.StatTooltipHandler 自带的tooltip美化/重命名功能
  * @author Chloe_koopa
  */
-public class AttributeBackendStat
+public class AttributeStatType
         extends StoredStatType
 {
     @Nullable
     private IAttribute backend;
 
-    static final Set<AttributeBackendStat> STATS_WITH_CUSTOM_ATTRIBUTE = new LinkedHashSet<>();
-    static final Set<AttributeBackendStat> INSTANCES = new LinkedHashSet<>();
-    protected static final Map<String, AttributeBackendStat> BY_ATTR_NAME = new HashMap<>();
+    public static final Set<AttributeStatType> STATS_WITH_CUSTOM_ATTRIBUTE = new LinkedHashSet<>();
+    public static final Set<AttributeStatType> INSTANCES = new LinkedHashSet<>();
+    protected static final Map<String, AttributeStatType> BY_ATTR_NAME = new HashMap<>();
 
     @Nullable
-    public static AttributeBackendStat byAttributeName(String attribute)
+    public static AttributeStatType byAttributeName(String attribute)
     {
         return BY_ATTR_NAME.getOrDefault(attribute, null);
     }
@@ -40,7 +44,7 @@ public class AttributeBackendStat
      * 指定一个attribute作为后端实现
      * @param backend 作为后端实现的Attribute
      */
-    public AttributeBackendStat(@Nullable IAttribute backend)
+    public AttributeStatType(@Nullable IAttribute backend)
     {
         this.backend = backend;
         if (backend != null)
@@ -53,7 +57,7 @@ public class AttributeBackendStat
     /**
      * 新建一个attribute作为后端实现
      */
-    public AttributeBackendStat()
+    public AttributeStatType()
     {
         this(null);
         STATS_WITH_CUSTOM_ATTRIBUTE.add(this);
@@ -67,7 +71,7 @@ public class AttributeBackendStat
      * @throws IllegalStateException 如果属性需要初始化，且在对象拥有注册名前初始化时throw
      */
     @Nonnull
-    protected IAttribute getBackend()
+    public IAttribute getBackend()
     {
         if (this.backend == null)
         {
@@ -130,8 +134,10 @@ public class AttributeBackendStat
         return null;
     }
 
-
-    void storeToCap(ICapabilityProvider owner)
+    /**
+     * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler#onPlayerDied
+     */
+    public void storeToCap(ICapabilityProvider owner)
     {
         if (owner instanceof LivingEntity)
         {
@@ -140,7 +146,10 @@ public class AttributeBackendStat
         }
     }
 
-    void recoverFromCap(ICapabilityProvider owner, ICapabilityProvider old)
+    /**
+     * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler#onPlayerClone(PlayerEvent.Clone)
+     */
+    public void recoverFromCap(ICapabilityProvider owner, ICapabilityProvider old)
     {
         if (owner instanceof LivingEntity)
         {
@@ -162,5 +171,13 @@ public class AttributeBackendStat
     public int hashCode()
     {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "AttributeStatType{" +
+                "backend=" + backend +
+                ", order=" + order +
+                '}';
     }
 }

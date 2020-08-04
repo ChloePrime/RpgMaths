@@ -1,5 +1,6 @@
 package moe.gensoukyo.rpgmaths.common.stats;
 
+import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -9,11 +10,12 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static moe.gensoukyo.rpgmaths.common.stats.AttributeBackendStat.INSTANCES;
-import static moe.gensoukyo.rpgmaths.common.stats.AttributeBackendStat.STATS_WITH_CUSTOM_ATTRIBUTE;
+import static moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType.INSTANCES;
+import static moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType.STATS_WITH_CUSTOM_ATTRIBUTE;
 
 /**
- * 负责把 {@link AttributeBackendStat} 新增加的 Attribute 附加到实体身上
+ * 负责把 {@link AttributeStatType} 新增加的 Attribute 附加到实体身上
+ * @see AttributeStatType
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber
@@ -36,13 +38,13 @@ public class AdditionalAttributeHandler
         attachAttr(event);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private static void attachAttr(EntityEvent event)
     {
         if (event.getEntity() instanceof LivingEntity)
         {
             LivingEntity entity = (LivingEntity) event.getEntity();
             //防止重复注册
+            //noinspection ConstantConditions
             if (entity.getAttribute(getMark().getBackend()) != null)
             {
                 return;
@@ -53,7 +55,7 @@ public class AdditionalAttributeHandler
         }
     }
 
-    private static AttributeBackendStat getMark()
+    private static AttributeStatType getMark()
     {
         if (MARK == null)
         {
@@ -61,7 +63,7 @@ public class AdditionalAttributeHandler
         }
         return MARK;
     }
-    private static AttributeBackendStat MARK;
+    private static AttributeStatType MARK;
 
     //解决死亡后Attribute消失的问题
 

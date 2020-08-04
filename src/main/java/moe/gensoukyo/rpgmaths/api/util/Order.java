@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.util;
+package moe.gensoukyo.rpgmaths.api.util;
 
 import com.google.common.base.Preconditions;
 
@@ -14,6 +14,7 @@ public class Order implements Ordered<Order>
     protected int pMain;
     protected int pSub;
 
+    @Nonnull
     @Override
     public Order getOrder()
     {
@@ -28,14 +29,14 @@ public class Order implements Ordered<Order>
     }
 
     @Override
-    public void moveBefore(Order that)
+    public void moveBefore(@Nonnull Order that)
     {
         this.makeSame(that);
         this.pSub = that.pSub + 1;
     }
 
     @Override
-    public void moveAfter(Order that)
+    public void moveAfter(@Nonnull Order that)
     {
         this.makeSame(that);
         this.pSub = that.pSub - 1;
@@ -59,5 +60,11 @@ public class Order implements Ordered<Order>
             return -main;
         }
         return -Integer.compare(this.pSub, that.pSub);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Order Main: " + pMain + " Sub: " + pSub;
     }
 }

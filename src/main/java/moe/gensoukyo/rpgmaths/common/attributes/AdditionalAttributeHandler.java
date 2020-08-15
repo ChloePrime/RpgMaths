@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.stats;
+package moe.gensoukyo.rpgmaths.common.attributes;
 
 import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import net.minecraft.entity.LivingEntity;

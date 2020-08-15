@@ -12,24 +12,31 @@ public interface IStatHandler
      * @param type 属性类型
      * @return 该handler宿主实体的某项数据
      */
-    float getBaseValue(IStatType type);
+    double getBaseValue(IStatType type);
 
     /**
      * 获取某一项数据
      * @param type 属性类型
      * @return 该handler宿主实体的某项数据
      */
-    float getFinalValue(IStatType type);
+    double getFinalValue(IStatType type);
 
     /**
      * 设置某一项的数据
      * @param type 数据种类
      * @param value 该数据要设置成的值
-     * @return 设置数据是否有效，通常这取决于
+     * @return 这次设置数据是否有效
      */
-     boolean setBaseValue(IStatType type, float value);
+     boolean setBaseValue(IStatType type, double value);
 
-     default boolean addTo(IStatType type, float value)
+    /**
+     * 将某一项数据增加一定值
+     * @param type 数据种类
+     * @param value 该数据要设置成的值
+     * @return 这次设置数据是否有效
+     */
+     @SuppressWarnings("unused")
+     default boolean addTo(IStatType type, double value)
      {
          return setBaseValue(type, getBaseValue(type) + value);
      }

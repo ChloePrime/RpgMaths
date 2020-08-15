@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common;
+package moe.gensoukyo.rpgmaths.common.registry;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;

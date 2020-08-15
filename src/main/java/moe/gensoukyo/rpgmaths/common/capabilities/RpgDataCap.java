@@ -1,11 +1,13 @@
 package moe.gensoukyo.rpgmaths.common.capabilities;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.api.IRpgData;
+import moe.gensoukyo.rpgmaths.api.Constants;
+import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
+import moe.gensoukyo.rpgmaths.api.data.IRpgData;
+import moe.gensoukyo.rpgmaths.api.data.IRpgDataDispatcher;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
-import moe.gensoukyo.rpgmaths.api.impl.stats.StatHandlerImpl;
 import moe.gensoukyo.rpgmaths.common.util.StorageCapToNbt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -26,22 +28,19 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * 拥有RPG数据的能力
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber
-public class RpgDataCap
-{
+public class RpgDataCap {
     public static final ResourceLocation NAME = new ResourceLocation(
             RpgMathsMod.ID,
             "rpg_data"
     );
 
-    private static final IRpgData EMPTY_DATA = new IRpgData()
-    {
+    private static final IRpgData EMPTY_DATA = new IRpgData() {
         @Override
         public String toString() {
             return "Empty RPG Data";
@@ -52,32 +51,37 @@ public class RpgDataCap
             return false;
         }
 
+        @Nonnull
         @Override
-        public Optional<IResistanceMap> getResistance() {
-            return Optional.empty();
+        public IResistanceMap getResistance() {
+            return IResistanceMap.DEFAULT;
         }
 
+        @Nonnull
         @Override
         public IStatHandler getStats() {
             return new IStatHandler() {
                 @Override
-                public float getBaseValue(IStatType type)
-                {
+                public double getBaseValue(IStatType type) {
                     return 0;
                 }
 
                 @Override
-                public float getFinalValue(IStatType type)
-                {
+                public double getFinalValue(IStatType type) {
                     return 0;
                 }
 
                 @Override
-                public boolean setBaseValue(IStatType type, float value)
-                {
+                public boolean setBaseValue(IStatType type, double value) {
                     return false;
                 }
             };
+        }
+
+        @Nonnull
+        @Override
+        public IDamageType[] getDefaultDamageTypes() {
+            return Constants.DEFAULT_DAMAGE_TYPES;
         }
 
         @Override
@@ -86,8 +90,7 @@ public class RpgDataCap
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt)
-        {
+        public void deserializeNBT(CompoundNBT nbt) {
 
         }
     };
@@ -96,11 +99,9 @@ public class RpgDataCap
     private static Capability<IRpgData> TOKEN;
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class Registering
-    {
+    public static class Registering {
         @SubscribeEvent
-        public static void onSetup(FMLCommonSetupEvent event)
-        {
+        public static void onSetup(FMLCommonSetupEvent event) {
             CapabilityManager.INSTANCE.register(
                     IRpgData.class,
                     StorageCapToNbt.getInstance(),
@@ -110,125 +111,62 @@ public class RpgDataCap
     }
 
 
-    /**
-     * RpgData接口的实现，
-     * 同时也是附加到宿主上的对象
-     * @author Chloe_koopa
-     */
-    protected static class RpgDataImpl implements IRpgData
-    {
-        private final ICapabilityProvider owner;
-        private final IStatHandler statHandler;
+    protected static class CapProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT> {
+        private static final IRpgDataDispatcher DISPATCHER = RpgMathsMod.getApi().getDataDispatcher();
 
-        public RpgDataImpl(ICapabilityProvider owner)
-        {
-            this.owner = owner;
-            this.statHandler = new StatHandlerImpl(this.owner);
-        }
-
-        @Override
-        public String toString()
-        {
-            return "RPG Data For " + owner.toString();
-        }
-
-        @Override
-        public boolean hasRpgData()
-        {
-            return true;
-        }
-
-        @Override
-        public Optional<IResistanceMap> getResistance()
-        {
-            return Optional.empty();
-        }
-
-        @Override
-        public IStatHandler getStats()
-        {
-            return this.statHandler;
-        }
-
-        @Override
-        public CompoundNBT serializeNBT()
-        {
-            return new CompoundNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundNBT nbt)
-        {
-
-        }
-    }
-
-    protected static class CapProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
-    {
         @Nullable
         private IRpgData capInstance;
         private final ICapabilityProvider owner;
 
-        public CapProvider(ICapabilityProvider owner)
-        {
+        public CapProvider(ICapabilityProvider owner) {
             this.owner = owner;
         }
 
         @Nonnull
         @Override
-        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side)
-        {
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
             return (cap == TOKEN)
                     ? LazyOptional.of(this::getOrCreate).cast()
                     : LazyOptional.empty();
         }
 
         @Nonnull
-        private IRpgData getOrCreate()
-        {
-            if (this.capInstance == null)
-            {
-                this.capInstance = new RpgDataImpl(this.owner);
+        private IRpgData getOrCreate() {
+            if (this.capInstance == null) {
+                this.capInstance = DISPATCHER.getData(this.owner).orElse(EMPTY_DATA);
             }
             return this.capInstance;
         }
 
         @Override
-        public CompoundNBT serializeNBT()
-        {
+        public CompoundNBT serializeNBT() {
             return getOrCreate().serializeNBT();
         }
 
         @Override
         public void deserializeNBT(CompoundNBT nbt) {
-            if (capInstance != null)
-            {
+            if (capInstance != null) {
                 capInstance.deserializeNBT(nbt);
             }
         }
     }
 
     @SubscribeEvent
-    public static void onCapAttachToEntity(AttachCapabilitiesEvent<Entity> event)
-    {
-        if (event.getObject() instanceof LivingEntity)
-        {
+    public static void onCapAttachToEntity(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof LivingEntity) {
             attach(event);
         }
     }
 
     @SubscribeEvent
-    public static void onCapAttachToItem(AttachCapabilitiesEvent<ItemStack> event)
-    {
+    public static void onCapAttachToItem(AttachCapabilitiesEvent<ItemStack> event) {
         attach(event);
     }
 
     private static <T extends ICapabilityProvider>
-    void attach(AttachCapabilitiesEvent<T> event)
-    {
+    void attach(AttachCapabilitiesEvent<T> event) {
         ICapabilityProvider o = event.getObject();
-        if (o != null)
-        {
+        if (o != null) {
             event.addCapability(NAME, new CapProvider(o));
         }
     }

@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
  * 用于记录某些东西排序的
  * @author Chloe_koopa
  */
-public class Order implements Ordered<Order>
+public class Order implements IOrder<Order>
 {
     protected int pMain;
     protected int pSub;

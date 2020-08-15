@@ -66,13 +66,13 @@ public class StatStorageCap
     public static class Instance
             implements INBTSerializable<CompoundNBT>
     {
-        private final Map<IStatType, Float> statMap = new IdentityHashMap<>();
+        private final Map<IStatType, Double> statMap = new IdentityHashMap<>();
 
-        public float getStat(IStatType stat)
+        public Double getStat(IStatType stat)
         {
-            return statMap.getOrDefault(stat, 0f);
+            return statMap.getOrDefault(stat, 0d);
         }
-        public void setStat(IStatType stat, float value)
+        public void setStat(IStatType stat, double value)
         {
             statMap.put(stat, value);
         }
@@ -85,7 +85,7 @@ public class StatStorageCap
                 Objects.requireNonNull(entryName,
                         "null register name for entry " + entry.getClass().getCanonicalName()
                 );
-                result.putFloat(entryName.toString(), value);
+                result.putDouble(entryName.toString(), value);
             });
             return result;
         }
@@ -97,7 +97,7 @@ public class StatStorageCap
             //把key从字符串转换成IStatEntry，然后和value一起塞入statMap
             nbt.keySet().forEach(key ->
                     api.getRegisteries().getStat(new ResourceLocation(key)).ifPresent(entry ->
-                            statMap.put(entry, nbt.getFloat(key))
+                            statMap.put(entry, nbt.getDouble(key))
                     )
             );
         }

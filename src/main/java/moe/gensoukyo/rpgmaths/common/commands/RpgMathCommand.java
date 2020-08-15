@@ -71,7 +71,7 @@ public class RpgMathCommand
         IStatHandler handler = getStatHandler(context);
         IStatType statType = context.getArgument(ARGUMENT_STAT_NAME, IStatType.class);
 
-        final float statValue = handler.getFinalValue(statType);
+        final double statValue = handler.getFinalValue(statType);
 
         context.getSource().sendFeedback(new StringTextComponent(String.valueOf(statValue)), true);
         return (int) statValue;

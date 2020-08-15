@@ -9,4 +9,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  */
 public abstract class AbstractResistanceMap
         extends ForgeRegistryEntry<IResistanceMap>
-        implements IResistanceMap { }
+        implements IResistanceMap {
+
+}

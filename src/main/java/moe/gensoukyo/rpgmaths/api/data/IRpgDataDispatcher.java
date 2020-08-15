@@ -1,9 +1,10 @@
-package moe.gensoukyo.rpgmaths.api;
+package moe.gensoukyo.rpgmaths.api.data;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface IRpgDataDispatcher
@@ -43,5 +44,5 @@ public interface IRpgDataDispatcher
      * @param entity 可能拥有数据的对象
      * @return RPG数据
      */
-    IRpgData getData(ICapabilityProvider entity);
+    Optional<IRpgData> getData(ICapabilityProvider entity);
 }

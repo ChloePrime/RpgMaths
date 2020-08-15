@@ -1,8 +1,8 @@
 package moe.gensoukyo.rpgmaths.common;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.api.IRpgData;
 import moe.gensoukyo.rpgmaths.api.IRpgMathsApi;
+import moe.gensoukyo.rpgmaths.api.data.IRpgData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -13,6 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
+ * 处理伤害事件
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber

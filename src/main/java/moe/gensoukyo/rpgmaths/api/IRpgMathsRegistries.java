@@ -6,6 +6,7 @@ import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
 /**
@@ -28,7 +29,7 @@ public interface IRpgMathsRegistries
      * @param id 需要查询的实体数值的id
      * @return id所表示的实体RPG数据类型，如果无该数值则返回Empty
      */
-    Optional<IStatType> getStat(ResourceLocation id);
+    Optional<IStatType> getStat(@Nonnull ResourceLocation id);
 
     /**
      * 获取伤害类型的注册表
@@ -41,7 +42,7 @@ public interface IRpgMathsRegistries
      * @param id 需要查询的伤害类型的id
      * @return id所表示的伤害类型，如果无该数值则返回Empty
      */
-    Optional<IDamageType> getDamageType(ResourceLocation id);
+    Optional<IDamageType> getDamageType(@Nonnull ResourceLocation id);
 
     /**
      * 获取抗性表模板的注册表
@@ -54,5 +55,5 @@ public interface IRpgMathsRegistries
      * @param id 需要查询的抗性表模板的id
      * @return id所表示的抗性表模板，如果无该数值则返回Empty
      */
-    Optional<IResistanceMap> getResistanceMap(ResourceLocation id);
+    Optional<IResistanceMap> getResistanceMap(@Nonnull ResourceLocation id);
 }

@@ -1,6 +1,8 @@
-package moe.gensoukyo.rpgmaths.api.stats;
+package moe.gensoukyo.rpgmaths.api.impl.stats;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import moe.gensoukyo.rpgmaths.api.util.Order;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
@@ -15,7 +17,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 添加了针对FinalValue的默认处理
@@ -23,14 +24,12 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public abstract class AbstractStatType
         extends ForgeRegistryEntry<IStatType>
-        implements IStatType
-{
-    protected Order order = new Order();
+        implements IStatType {
+    protected final Order order = new Order();
 
     @Nonnull
     @Override
-    public Order getOrder()
-    {
+    public Order getOrder() {
         return this.order;
     }
 
@@ -39,31 +38,32 @@ public abstract class AbstractStatType
 
     private static final Direction DIR_GET_ARMOR = Direction.EAST;
 
+    @Override
+    public boolean hasStat(ICapabilityProvider owner) {
+        return true;
+    }
+
     /**
      * 本体数值+装甲内的数值+主手物品的数值
+     *
      * @param owner 数据的拥有者
      * @return 生物本体+装备栏内+主手物品的数据值
      */
     @Override
-    public float getFinalValue(ICapabilityProvider owner)
-    {
-        AtomicReference<Float> result = new AtomicReference<>(getBaseValue(owner));
+    public double getFinalValue(ICapabilityProvider owner) {
+        AtomicDouble result = new AtomicDouble(getBaseValue(owner));
         //添加生物的主手物品和装备的数据
         //装备
         owner.getCapability(ITEM_HANDLER, DIR_GET_ARMOR).ifPresent(iItemHandler -> {
-            for (int i = 0; i < iItemHandler.getSlots(); i++)
-            {
+            for (int i = 0; i < iItemHandler.getSlots(); i++) {
                 //lambda表达式特性
-                int finalI = i;
-                result.updateAndGet(v -> v + getFinalValue(iItemHandler.getStackInSlot(finalI)));
+                result.addAndGet(getFinalValue(iItemHandler.getStackInSlot(i)));
             }
         });
-        if (owner instanceof LivingEntity)
-        {
+        if (owner instanceof LivingEntity) {
             LivingEntity livingOwner = (LivingEntity) owner;
             //主手
-            result.updateAndGet(v -> v + getFinalValue(
-                    livingOwner.getHeldItem(livingOwner.getActiveHand())
+            result.addAndGet(getFinalValue(livingOwner.getHeldItem(livingOwner.getActiveHand())
             ));
         }
         return result.get();
@@ -71,13 +71,12 @@ public abstract class AbstractStatType
 
 
     private ITextComponent cachedTrKey;
+
     @Nonnull
     @Override
-    public ITextComponent getName()
-    {
+    public ITextComponent getName() {
         Objects.requireNonNull(this.getRegistryName(), "Stat Name Got Before Named");
-        if (this.cachedTrKey == null)
-        {
+        if (this.cachedTrKey == null) {
             Objects.requireNonNull(getRegistryName());
             this.cachedTrKey = new TranslationTextComponent(
                     String.format(I18N_KEY_PATTERN, getRegistryName()
@@ -91,18 +90,16 @@ public abstract class AbstractStatType
     public static final String DESC_KEY_PATTERN = "%s." + RpgMathsMod.ID + ".stat.%s";
 
     @Override
-    public ITextComponent getDescription()
-    {
+    public ITextComponent getDescription() {
         return getDescKey();
     }
 
     private ITextComponent cachedDescKey;
-    private ITextComponent getDescKey()
-    {
+
+    private ITextComponent getDescKey() {
         Objects.requireNonNull(this.getRegistryName(), "Stat Description Got Before Named");
         ResourceLocation regName = this.getRegistryName();
-        if (this.cachedDescKey == null)
-        {
+        if (this.cachedDescKey == null) {
             this.cachedDescKey = new TranslationTextComponent(
                     String.format(DESC_KEY_PATTERN, regName.getNamespace(), regName.getPath())
             );

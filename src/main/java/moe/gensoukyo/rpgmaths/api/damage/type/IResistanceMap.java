@@ -1,6 +1,8 @@
 package moe.gensoukyo.rpgmaths.api.damage.type;
 
 import moe.gensoukyo.rpgmaths.api.impl.damage.type.AbstractResistanceMap;
+import net.minecraft.nbt.INBT;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
@@ -8,7 +10,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  * 计算某个抗性拥有者对抗性的倍率
  * @author Chloe_koopa
  */
-public interface IResistanceMap extends IForgeRegistryEntry<IResistanceMap>
+public interface IResistanceMap extends IForgeRegistryEntry<IResistanceMap>, INBTSerializable<INBT>
 {
     /**
      * 获取抗性数值
@@ -24,6 +26,17 @@ public interface IResistanceMap extends IForgeRegistryEntry<IResistanceMap>
         public double getMultiplier(IDamageType[] types)
         {
             return 1.0;
+        }
+
+        @Override
+        public INBT serializeNBT()
+        {
+            return null;
+        }
+
+        @Override
+        public void deserializeNBT(INBT nbt)
+        {
         }
     };
 

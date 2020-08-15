@@ -1,19 +1,19 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
+# This contains the data relating to the loading mods.
 # There are several mandatory fields (#mandatory), and many more that are optional (#optional).
 # The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
+# Note that there are a couple fromTag TOML lists in this file.
 # Find more information on toml format here:  https://github.com/toml-lang/toml
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+# The name fromTag the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists fromTag versions.
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="http://my.issue.tracker/" #optional
-# A list of mods - how many allowed here is determined by the individual mod loader
+# A list fromTag mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
-# The modid of the mod
+# The modid fromTag the mod
 modId="rpgmaths" #mandatory
-# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+# The version number fromTag the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="RPG Maths" #mandatory
@@ -21,7 +21,7 @@ displayName="RPG Maths" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="http://example.com/" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
+# A file name (in the root fromTag the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
 credits="Made by ChloePrime(Chloe_koopa)" #optional
@@ -39,19 +39,19 @@ and Attach them to Item Stacks.
 为MC添加RPG风格的伤害系统，并将RPG道具参数添加到物品堆上。
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
-    # the modid of the dependency
+[[dependencies.rpgmaths]] #optional
+    # the modid fromTag the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
-    # The version range of the dependency
+    # The version range fromTag the dependency
     versionRange="[31,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.examplemod]]
+[[dependencies.rpgmaths]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2]"

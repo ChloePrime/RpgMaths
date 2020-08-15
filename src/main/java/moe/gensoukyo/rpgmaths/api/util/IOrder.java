@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
  * @author Chloe_koopa
  * @param <I> 具体实现的类型s
  */
-public interface Ordered<I extends Ordered<I>> extends Comparable<I>
+public interface IOrder<I extends IOrder<I>> extends Comparable<I>
 {
     /**
      * 获取标准排序器

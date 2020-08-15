@@ -2,15 +2,10 @@ package moe.gensoukyo.rpgmaths.api;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.damage.IDamageFormula;
-import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
-import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.stats.IStatType;
-import net.minecraft.util.ResourceLocation;
+import moe.gensoukyo.rpgmaths.api.data.IRpgData;
+import moe.gensoukyo.rpgmaths.api.data.IRpgDataDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.Optional;
 
 /**
  * @see RpgMathsMod#getApi()
@@ -35,6 +30,12 @@ public interface IRpgMathsApi {
      * @return 实体对应的RPG数据管理器
      */
     LazyOptional<IRpgData> getRpgData(ICapabilityProvider entity);
+
+    /**
+     * 获取RPG数据分配器
+     * @return RPG数据分配器
+     */
+    IRpgDataDispatcher getDataDispatcher();
 
     /**
      * 获取可注册内容管理器

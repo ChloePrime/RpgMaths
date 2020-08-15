@@ -4,7 +4,6 @@ import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -20,12 +19,11 @@ import java.util.Set;
  * 用此对象 构建/包装 的Attribute不会因玩家死亡而重置，
  * 并且会使用自己的命名。
  * @see IAttribute
- * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler
- * @see moe.gensoukyo.rpgmaths.common.stats.StatTooltipHandler 自带的tooltip美化/重命名功能
+ * @see moe.gensoukyo.rpgmaths.common.attributes.AdditionalAttributeHandler
+ * @see moe.gensoukyo.rpgmaths.common.attributes.StatTooltipHandler 自带的tooltip美化/重命名功能
  * @author Chloe_koopa
  */
-public class AttributeStatType
-        extends StoredStatType
+public class AttributeStatType extends StoredStatType
 {
     @Nullable
     private IAttribute backend;
@@ -96,18 +94,18 @@ public class AttributeStatType
     }
 
     @Override
-    public float getBaseValue(ICapabilityProvider owner)
+    public double getBaseValue(ICapabilityProvider owner)
     {
         if (owner instanceof LivingEntity)
         {
             LivingEntity living = (LivingEntity) owner;
-            return (float) living.getAttribute(this.getBackend()).getBaseValue();
+            return living.getAttribute(this.getBackend()).getBaseValue();
         }
         return 0f;
     }
 
     @Override
-    public boolean setBaseValue(ICapabilityProvider owner, float value)
+    public boolean setBaseValue(ICapabilityProvider owner, double value)
     {
         if (owner instanceof LivingEntity)
         {
@@ -119,35 +117,30 @@ public class AttributeStatType
     }
 
     @Override
-    public float getFinalValue(ICapabilityProvider owner)
+    public double getFinalValue(ICapabilityProvider owner)
     {
         if (owner instanceof LivingEntity)
         {
             LivingEntity living = (LivingEntity) owner;
-            return (float) living.getAttribute(this.getBackend()).getValue();
+            return living.getAttribute(this.getBackend()).getValue();
         }
         return super.getFinalValue(owner);
     }
 
-    @Override
-    public ITextComponent getDescription() {
-        return null;
-    }
-
     /**
-     * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler#onPlayerDied
+     * @see moe.gensoukyo.rpgmaths.common.attributes.AdditionalAttributeHandler#onPlayerDied
      */
     public void storeToCap(ICapabilityProvider owner)
     {
         if (owner instanceof LivingEntity)
         {
             LivingEntity living = (LivingEntity) owner;
-            super.setBaseValue(living, (float) living.getAttribute(this.getBackend()).getBaseValue());
+            super.setBaseValue(living, living.getAttribute(this.getBackend()).getBaseValue());
         }
     }
 
     /**
-     * @see moe.gensoukyo.rpgmaths.common.stats.AdditionalAttributeHandler#onPlayerClone(PlayerEvent.Clone)
+     * @see moe.gensoukyo.rpgmaths.common.attributes.AdditionalAttributeHandler#onPlayerClone(PlayerEvent.Clone)
      */
     public void recoverFromCap(ICapabilityProvider owner, ICapabilityProvider old)
     {

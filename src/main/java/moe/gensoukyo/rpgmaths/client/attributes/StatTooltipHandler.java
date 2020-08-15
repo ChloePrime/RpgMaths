@@ -1,4 +1,4 @@
-package moe.gensoukyo.rpgmaths.common.attributes;
+package moe.gensoukyo.rpgmaths.client.attributes;
 
 import moe.gensoukyo.rpgmaths.RpgMathsConfig;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;

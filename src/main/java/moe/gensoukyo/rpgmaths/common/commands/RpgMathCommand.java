@@ -27,14 +27,12 @@ import static net.minecraft.command.Commands.literal;
  * 可以设置/获取属性值
  * @author Chloe_koopa
  */
-public class RpgMathCommand
-{
+public class RpgMathCommand {
     public static final String PERM_NODE = RpgMathsMod.ID + ".command";
     final static String ARGUMENT_STAT_NAME = "stat";
     final static String ARGUMENT_VALUE = "value";
 
-    static void register(CommandDispatcher<CommandSource> dispatcher)
-    {
+    static void register(CommandDispatcher<CommandSource> dispatcher) {
         //rpgmaths
         dispatcher.register(literal(RpgMathsMod.ID)
                 //权限
@@ -92,11 +90,9 @@ public class RpgMathCommand
 
     @Nonnull
     private static IStatHandler getStatHandler(CommandContext<CommandSource> context)
-            throws CommandSyntaxException
-    {
+            throws CommandSyntaxException {
         Entity entity = context.getSource().getEntity();
-        if (entity == null)
-        {
+        if (entity == null) {
             throw EntityArgument.ENTITY_NOT_FOUND.create();
         }
         AtomicReference<IStatHandler> result = new AtomicReference<>(null);
@@ -108,10 +104,11 @@ public class RpgMathCommand
     }
 
     @SuppressWarnings("SameParameterValue")
-    static boolean hasPerm(CommandSource src, String node)
-    {
+    static boolean hasPerm(CommandSource src, String node) {
         Entity entity = src.getEntity();
-        if (! (entity instanceof PlayerEntity)) { return true; }
+        if (!(entity instanceof PlayerEntity)) {
+            return true;
+        }
 
         PlayerEntity player = (PlayerEntity) entity;
         return true;

@@ -33,19 +33,19 @@ public class RpgDataDispatcherImpl implements IRpgDataDispatcher {
 
     @Override
     public Optional<IRpgData> getData(ICapabilityProvider entity) {
+        if (entity instanceof PlayerEntity) {
+            return Optional.of(new IsolatedRpgData(entity));
+        }
         if (cache.containsKey(entity)) {
             return Optional.ofNullable(cache.get(entity));
         } else {
             IRpgData result = null;
             //玩家永远拥有RPG数据
-            if (entity instanceof PlayerEntity) {
-                result = new IsolatedRpgData(entity);
-            } else {
-                for (Map.Entry<Predicate<ICapabilityProvider>, IRpgData> entry : loaders.entrySet()) {
-                    if (entry.getKey().test(entity)) {
-                        result = entry.getValue();
-                        break;
-                    }
+            for (Map.Entry<Predicate<ICapabilityProvider>, IRpgData>
+                    entry : loaders.entrySet()) {
+                if (entry.getKey().test(entity)) {
+                    result = entry.getValue();
+                    break;
                 }
             }
             cache.put(entity, result);

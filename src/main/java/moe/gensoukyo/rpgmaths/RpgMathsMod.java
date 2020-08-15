@@ -40,6 +40,6 @@ public class RpgMathsMod
         ContentRegistering.init();
         //配置文件
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, RpgMathsConfig.COMMON_CONFIG);
-        getApi().setDamageFormula(new LinearDamageFormula(1.2, 1.0));
+        getApi().setDamageFormula(new LinearDamageFormula(1.0, 1.0));
     }
 }

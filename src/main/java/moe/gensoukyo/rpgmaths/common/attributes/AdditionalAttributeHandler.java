@@ -19,34 +19,28 @@ import static moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType.STATS_WITH
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber
-public class AdditionalAttributeHandler
-{
+public class AdditionalAttributeHandler {
     /**
      * <a href = "https://github.com/SleepyTrousers/EnderIO/blob/master/enderio-base/src/main/java/crazypants/enderio/base/handler/darksteel/PlayerAOEAttributeHandler.java">
-     *     see this
+     * see this
      * </a>
      */
     @SubscribeEvent
-    public static void onEntityNew(EntityEvent.EntityConstructing event)
-    {
+    public static void onEntityNew(EntityEvent.EntityConstructing event) {
         attachAttr(event);
     }
 
     @SubscribeEvent
-    public static void onEntitySpawned(EntityJoinWorldEvent event)
-    {
+    public static void onEntitySpawned(EntityJoinWorldEvent event) {
         attachAttr(event);
     }
 
-    private static void attachAttr(EntityEvent event)
-    {
-        if (event.getEntity() instanceof LivingEntity)
-        {
+    private static void attachAttr(EntityEvent event) {
+        if (event.getEntity() instanceof LivingEntity) {
             LivingEntity entity = (LivingEntity) event.getEntity();
             //防止重复注册
             //noinspection ConstantConditions
-            if (entity.getAttribute(getMark().getBackend()) != null)
-            {
+            if (entity.getAttribute(getMark().getBackend()) != null) {
                 return;
             }
             STATS_WITH_CUSTOM_ATTRIBUTE.forEach(stat ->
@@ -55,32 +49,27 @@ public class AdditionalAttributeHandler
         }
     }
 
-    private static AttributeStatType getMark()
-    {
-        if (MARK == null)
-        {
+    private static AttributeStatType getMark() {
+        if (MARK == null) {
             MARK = STATS_WITH_CUSTOM_ATTRIBUTE.iterator().next();
         }
         return MARK;
     }
+
     private static AttributeStatType MARK;
 
     //解决死亡后Attribute消失的问题
 
     @SubscribeEvent
-    public static void onPlayerDied(LivingDeathEvent event)
-    {
-        if (event.getEntity() instanceof PlayerEntity)
-        {
+    public static void onPlayerDied(LivingDeathEvent event) {
+        if (event.getEntity() instanceof PlayerEntity) {
             INSTANCES.forEach(stat -> stat.storeToCap(event.getEntity()));
         }
     }
 
     @SubscribeEvent
-    public static void onPlayerClone(PlayerEvent.Clone event)
-    {
-        if (event.isWasDeath())
-        {
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        if (event.isWasDeath()) {
             INSTANCES.forEach(stat -> stat.recoverFromCap(event.getPlayer(), event.getOriginal()));
         }
     }

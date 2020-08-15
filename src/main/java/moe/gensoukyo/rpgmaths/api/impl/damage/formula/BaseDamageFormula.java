@@ -9,6 +9,7 @@ import moe.gensoukyo.rpgmaths.api.data.IRpgData;
 import moe.gensoukyo.rpgmaths.api.events.TypedDamageEvent;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -26,8 +27,14 @@ public abstract class BaseDamageFormula implements IDamageFormula {
     private static final Random RANDOM = new Random();
     protected static final IRpgMathsApi API = RpgMathsMod.getApi();
 
-    protected final double getFinalAttack(ICapabilityProvider attacker, IDamageType damageType) {
-        return getFinalValue(attacker, damageType.getStat(ATTACK));
+    protected final double getFinalAttack(ICapabilityProvider attacker,
+                                          IDamageType damageType,
+                                          double vanillaDamage) {
+        double result = getFinalValue(attacker, damageType.getStat(ATTACK));
+        if (damageType.acceptsVanillaDamage() && (! (attacker instanceof PlayerEntity))) {
+            result += vanillaDamage;
+        }
+        return result;
     }
 
     protected final double getFinalDefense(ICapabilityProvider victim, IDamageType damageType) {
@@ -41,14 +48,13 @@ public abstract class BaseDamageFormula implements IDamageFormula {
     }
 
     @Override
-    public final double calculateDamage(ICapabilityProvider attacker, LivingEntity victim) {
-        return IDamageFormula.super.calculateDamage(attacker, victim);
+    public final double calculateDamage(ICapabilityProvider attacker, LivingEntity victim, double vanillaDamage) {
+        return IDamageFormula.super.calculateDamage(attacker, victim, vanillaDamage);
     }
 
     @Override
-    public final double calculateDamage(ICapabilityProvider attacker,
-                                        ItemStack weapon,
-                                        LivingEntity victim) {
+    public final double calculateDamage(ICapabilityProvider attacker, ItemStack weapon,
+                                        LivingEntity victim, double vanillaDamage) {
         double result = 0d;
         IDamageType[] types = API.getRpgData(weapon).map(IRpgData::getDefaultDamageTypes)
                 .orElse(Constants.DEFAULT_DAMAGE_TYPES);
@@ -56,7 +62,7 @@ public abstract class BaseDamageFormula implements IDamageFormula {
         for (final IDamageType type : types) {
             //基础公式计算
             double damage = calculateDamage0(
-                    getFinalAttack(attacker, type),
+                    getFinalAttack(attacker, type, vanillaDamage),
                     getFinalDefense(victim, type));
             double trigRate = (getFinalValue(attacker, type.getStat(TRIGGER))
                     * Constants.RANDOM_STAT_SCALE)

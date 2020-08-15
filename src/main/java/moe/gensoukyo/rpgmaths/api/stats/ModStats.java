@@ -1,6 +1,6 @@
 package moe.gensoukyo.rpgmaths.api.stats;
 
-import moe.gensoukyo.rpgmaths.api.impl.damage.formula.BaseDamageFormula;
+import moe.gensoukyo.rpgmaths.api.damage.IDamageFormula;
 import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -31,12 +31,12 @@ public class ModStats {
     ADF = new AttributeStatType(),
     /**
      * 暴击率，100 = 1.0概率
-     * @see BaseDamageFormula#calculateDamage(ICapabilityProvider, ItemStack, LivingEntity)
+     * @see IDamageFormula#calculateDamage(ICapabilityProvider, ItemStack, LivingEntity, double)
      */
     CRITICAL = new AttributeStatType(),
     /**
      * 全局触发几率，100 = 1.0概率
-     * @see BaseDamageFormula#calculateDamage(ICapabilityProvider, ItemStack, LivingEntity)
+     * @see IDamageFormula#calculateDamage(ICapabilityProvider, ItemStack, LivingEntity, double)
      */
     TRIGGER_ALL = new AttributeStatType();
 }

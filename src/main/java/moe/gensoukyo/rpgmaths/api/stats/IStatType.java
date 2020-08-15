@@ -2,6 +2,7 @@ package moe.gensoukyo.rpgmaths.api.stats;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.util.IOrder;
+import moe.gensoukyo.rpgmaths.client.attributes.StatTooltipHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -70,7 +71,7 @@ public interface IStatType extends IForgeRegistryEntry<IStatType>, IOrder<IStatT
     /**
      * 是否是可度量的属性
      * @return 是否是可度量的属性
-     * @see moe.gensoukyo.rpgmaths.common.attributes.StatTooltipHandler
+     * @see StatTooltipHandler
      */
     default boolean isCountable() {
         return true;

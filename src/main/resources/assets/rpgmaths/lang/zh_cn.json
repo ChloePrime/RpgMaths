@@ -7,5 +7,13 @@
   "rpgmaths.attribute.modifier.1": "%s%s %s§7（不含装备）",
   "rpgmaths.attribute.modifier.2": "%s%s %s§7（包括装备）",
   "rpgmaths.attribute.modifier.operator.add": "§a+",
-  "rpgmaths.attribute.modifier.operator.subtract": "§c-"
+  "rpgmaths.attribute.modifier.operator.subtract": "§c-",
+
+  "rpgmaths.damage.type.physics": "§7物理",
+  "rpgmaths.damage.type.magic": "§9法术",
+
+  "rpgmaths.damage.type.category.attack": "§c攻击力",
+  "rpgmaths.damage.type.category.defense": "§7防御力",
+  "rpgmaths.damage.type.category.trigger": "§b触发几率",
+  "rpgmaths.damage.type.category.n_trigger": "§a触发抵抗几率"
 }

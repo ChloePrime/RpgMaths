@@ -39,9 +39,10 @@ public class DamageHandler
         if (!canRpg) { return; }
 
         event.getSource().setDamageIsAbsolute();
+        event.getSource().setDamageBypassesArmor();
         event.setAmount(
                 (float) RpgMathsMod.getApi().getDamageFormula().calculateDamage(
-                        attacker, victim
+                        attacker, victim, event.getAmount()
                 )
         );
     }

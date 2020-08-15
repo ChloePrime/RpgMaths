@@ -6,10 +6,16 @@ import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType.TypedStatCategory;
 import moe.gensoukyo.rpgmaths.api.impl.stats.AttributeStatType;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Chloe_koopa
+ */
 public class DamageTypeStatGenerator {
     /**
      * 伤害类型
@@ -57,7 +63,6 @@ public class DamageTypeStatGenerator {
     }
 
     private static class GeneratedStatType extends AttributeStatType {
-
         private final IDamageType owner;
         private final TypedStatCategory category;
 
@@ -73,6 +78,21 @@ public class DamageTypeStatGenerator {
                     "] for damage type ["
                     + owner.getRegistryName()
                     + "]";
+        }
+
+        private ITextComponent name;
+
+        @Nonnull
+        @Override
+        public ITextComponent getName() {
+            if (this.name == null) {
+                this.name = new StringTextComponent("")
+                        .appendSibling(this.owner.getName())
+                        .appendSibling(new TranslationTextComponent(String.format(
+                                TypedStatCategory.LANG_FORMAT, this.category.getName())
+                        ));
+            }
+            return this.name;
         }
     }
 }

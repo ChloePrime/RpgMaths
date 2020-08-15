@@ -7,5 +7,13 @@
   "rpgmaths.attribute.modifier.1": "%s%s Base     %s",
   "rpgmaths.attribute.modifier.2": "%s%s Equipped %s",
   "rpgmaths.attribute.modifier.operator.add": "§a+",
-  "rpgmaths.attribute.modifier.operator.subtract": "§c-"
+  "rpgmaths.attribute.modifier.operator.subtract": "§c-",
+
+  "rpgmaths.damage.type.physics": "§7Kinetic",
+  "rpgmaths.damage.type.magic": "§9Arts/Magic",
+
+  "rpgmaths.damage.type.category.attack": " §cAttack Power",
+  "rpgmaths.damage.type.category.defense": " §7Defense",
+  "rpgmaths.damage.type.category.trigger": " §bTrigger Rate",
+  "rpgmaths.damage.type.category.n_trigger": " §aAnti Trigger Rate"
 }

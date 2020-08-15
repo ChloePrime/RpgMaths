@@ -16,7 +16,6 @@ public class StoredStatType extends AbstractStatType {
 
     @Override
     public double getBaseValue(ICapabilityProvider owner) {
-        //idea自动生成的，这个原子引用居然还能干这事，太草了
         return owner.getCapability(STORAGE_CAP)
                 .map(instance -> instance.getStat(this))
                 .orElse(0d);

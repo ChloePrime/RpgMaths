@@ -8,10 +8,14 @@ import moe.gensoukyo.rpgmaths.api.stats.ModStats;
  */
 public class ModDamageTypes {
     public static final IDamageType
-            PHYSICS = new DamageTypeImpl(ModStats.ATK, ModStats.DEF, null, null),
+            PHYSICS = new DamageTypeImpl(ModStats.ATK, ModStats.DEF, null, null) {
+        @Override
+        public boolean acceptsVanillaDamage() {
+            return true;
+        }
+    },
             MAGIC = new DamageTypeImpl(ModStats.ATS, ModStats.ADF, null, null);
 
-    public static final IDamageType[] MOD_TYPES = {PHYSICS, MAGIC};
-
-    private ModDamageTypes() {}
+    private ModDamageTypes() {
+    }
 }

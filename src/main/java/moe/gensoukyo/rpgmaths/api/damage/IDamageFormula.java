@@ -20,21 +20,22 @@ public interface IDamageFormula {
      * @param attacker 攻击者
      * @param weapon   攻击者攻击所用道具（通常为武器）
      * @param victim   被攻击者
+     * @param vanillaDamage 原版的攻击伤害，这通常被用来兼容原版的攻击方式
      * @return 伤害值
      */
     double calculateDamage(ICapabilityProvider attacker,
                            ItemStack weapon,
-                           LivingEntity victim);
+                           LivingEntity victim, double vanillaDamage);
 
     /**
      * 计算伤害，方便版，等效于使用空气攻击
-     *
      * @param attacker 攻击者
      * @param victim   被攻击者
+     * @param vanillaDamage 原版伤害
      * @return 伤害值
      */
     default double calculateDamage(ICapabilityProvider attacker,
-                                   LivingEntity victim) {
+                                   LivingEntity victim, double vanillaDamage) {
         final ItemStack weapon;
         if (attacker instanceof LivingEntity) {
             LivingEntity living = (LivingEntity) attacker;
@@ -44,7 +45,7 @@ public interface IDamageFormula {
                     .map(iItemHandler -> iItemHandler.getStackInSlot(0))
                     .orElse(ItemStack.EMPTY);
         }
-        return calculateDamage(attacker, weapon, victim);
+        return calculateDamage(attacker, weapon, victim, vanillaDamage);
     }
 
     class Cap {

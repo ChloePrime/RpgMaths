@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.0'
+version = '1.0.0-snapshot'
 group = 'moe.gensoukyo.rpgmaths' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'rpgmaths'
 

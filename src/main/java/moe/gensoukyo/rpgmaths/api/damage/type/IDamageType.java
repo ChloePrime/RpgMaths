@@ -2,6 +2,9 @@ package moe.gensoukyo.rpgmaths.api.damage.type;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
+import moe.gensoukyo.rpgmaths.api.impl.damage.formula.BaseDamageFormula;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -26,6 +29,11 @@ public interface IDamageType extends IForgeRegistryEntry<IDamageType>
         TRIGGER("trigger"),
         /* 触发抵抗 */
         ANTI_TRIGGER("n_trigger");
+        /**
+         * 语言文件密钥格式
+         * rpgmaths.damage.type.category.<属性名称>
+         */
+        public static final String LANG_FORMAT = RpgMathsMod.ID + ".damage.type.category.%s";
 
         private final String name;
         TypedStatCategory(String name) {
@@ -51,6 +59,15 @@ public interface IDamageType extends IForgeRegistryEntry<IDamageType>
      * @param generated 自动生成的属性
      */
     void registerStat(TypedStatCategory category, IStatType generated);
+
+    /**
+     * 这个攻击类型是否附加原版伤害
+     * @see BaseDamageFormula#calculateDamage(ICapabilityProvider, ItemStack, LivingEntity, double)
+     * @return 攻击类型是否附加原版伤害
+     */
+    default boolean acceptsVanillaDamage() {
+        return false;
+    }
 
     /**
      * 该类伤害每次被施加都会触发的效果

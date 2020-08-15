@@ -32,8 +32,7 @@ import java.util.Objects;
  * @author Chloe_koopa
  */
 @Mod.EventBusSubscriber
-public class StatStorageCap
-{
+public class StatStorageCap {
     @CapabilityInject(Instance.class)
     private static Capability<Instance> TOKEN;
 
@@ -44,14 +43,13 @@ public class StatStorageCap
 
     /**
      * 监听mod总线事件并注册
+     *
      * @author Chloe_koopa
      */
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    protected static class Registering
-    {
+    protected static class Registering {
         @SubscribeEvent
-        public static void onSetup(FMLCommonSetupEvent event)
-        {
+        public static void onSetup(FMLCommonSetupEvent event) {
             CapabilityManager.INSTANCE.register(
                     Instance.class,
                     StorageCapToNbt.getInstance(),
@@ -64,21 +62,19 @@ public class StatStorageCap
      * Capability实例
      */
     public static class Instance
-            implements INBTSerializable<CompoundNBT>
-    {
+            implements INBTSerializable<CompoundNBT> {
         private final Map<IStatType, Double> statMap = new IdentityHashMap<>();
 
-        public Double getStat(IStatType stat)
-        {
+        public Double getStat(IStatType stat) {
             return statMap.getOrDefault(stat, 0d);
         }
-        public void setStat(IStatType stat, double value)
-        {
+
+        public void setStat(IStatType stat, double value) {
             statMap.put(stat, value);
         }
+
         @Override
-        public CompoundNBT serializeNBT()
-        {
+        public CompoundNBT serializeNBT() {
             CompoundNBT result = new CompoundNBT();
             statMap.forEach((entry, value) -> {
                 ResourceLocation entryName = entry.getRegistryName();
@@ -91,8 +87,7 @@ public class StatStorageCap
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt)
-        {
+        public void deserializeNBT(CompoundNBT nbt) {
             IRpgMathsApi api = RpgMathsMod.getApi();
             //把key从字符串转换成IStatEntry，然后和value一起塞入statMap
             nbt.keySet().forEach(key ->
@@ -106,10 +101,10 @@ public class StatStorageCap
 
     /**
      * 用来黏贴到Capability提供者身上
+     *
      * @author Chloe_koopa
      */
-    protected static class Provider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
-    {
+    protected static class Provider implements ICapabilityProvider, INBTSerializable<CompoundNBT> {
         @Nullable
         private Instance capInstance;
 
@@ -123,26 +118,23 @@ public class StatStorageCap
         }
 
         @Nonnull
-        private Instance getOrCreate()
-        {
-            if (this.capInstance == null)
-            {
+        private Instance getOrCreate() {
+            if (this.capInstance == null) {
                 this.capInstance = new Instance();
             }
             return this.capInstance;
         }
 
-        private Provider() {}
+        private Provider() {
+        }
 
         @Override
-        public CompoundNBT serializeNBT()
-        {
+        public CompoundNBT serializeNBT() {
             return getOrCreate().serializeNBT();
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt)
-        {
+        public void deserializeNBT(CompoundNBT nbt) {
             getOrCreate().deserializeNBT(nbt);
         }
     }
@@ -151,10 +143,8 @@ public class StatStorageCap
      * 附加能力到活体
      */
     @SubscribeEvent
-    public static void onCapAttach(AttachCapabilitiesEvent<Entity> event)
-    {
-        if (event.getObject() instanceof LivingEntity)
-        {
+    public static void onCapAttach(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof LivingEntity) {
             event.addCapability(NAME, new Provider());
         }
     }

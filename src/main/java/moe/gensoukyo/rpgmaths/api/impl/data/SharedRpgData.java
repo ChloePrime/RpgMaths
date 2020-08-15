@@ -2,7 +2,6 @@ package moe.gensoukyo.rpgmaths.api.impl.data;
 
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
-import moe.gensoukyo.rpgmaths.api.impl.stats.FixedStatHandler;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
 import net.minecraft.nbt.CompoundNBT;
 

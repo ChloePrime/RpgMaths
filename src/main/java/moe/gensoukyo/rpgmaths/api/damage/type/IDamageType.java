@@ -1,8 +1,8 @@
 package moe.gensoukyo.rpgmaths.api.damage.type;
 
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
-import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import moe.gensoukyo.rpgmaths.api.impl.damage.formula.BaseDamageFormula;
+import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;

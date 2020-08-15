@@ -1,20 +1,16 @@
 package moe.gensoukyo.rpgmaths.common.capabilities;
 
-import io.netty.util.concurrent.AbstractEventExecutor;
-import mezz.jei.api.ingredients.ISlowRenderItem;
 import moe.gensoukyo.rpgmaths.RpgMathsMod;
 import moe.gensoukyo.rpgmaths.api.Constants;
 import moe.gensoukyo.rpgmaths.api.damage.type.IDamageType;
 import moe.gensoukyo.rpgmaths.api.damage.type.IResistanceMap;
 import moe.gensoukyo.rpgmaths.api.data.IRpgData;
 import moe.gensoukyo.rpgmaths.api.data.IRpgDataDispatcher;
-import moe.gensoukyo.rpgmaths.api.impl.data.IsolatedRpgData;
 import moe.gensoukyo.rpgmaths.api.stats.IStatHandler;
 import moe.gensoukyo.rpgmaths.api.stats.IStatType;
 import moe.gensoukyo.rpgmaths.common.util.StorageCapToNbt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;

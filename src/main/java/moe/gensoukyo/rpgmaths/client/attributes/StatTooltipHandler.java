@@ -9,6 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +32,7 @@ public class StatTooltipHandler {
     static PlayerEntity curPlayer;
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void onTooltip(ItemTooltipEvent event) {
         if (RpgMathsConfig.USE_CUSTOM_TOOLTIP.get()) {
             curPlayer = event.getPlayer();
